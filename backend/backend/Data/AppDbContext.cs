@@ -12,7 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<City> Cities { get; set; }
     public DbSet<Address> Addresses { get; set; }
     public DbSet<Artist> Artists { get; set; }
-    public DbSet<Genre> Albums { get; set; }
+    public DbSet<Genre> Genres { get; set; }
     public DbSet<Song> Songs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

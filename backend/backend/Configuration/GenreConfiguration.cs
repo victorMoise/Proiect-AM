@@ -8,7 +8,7 @@ namespace backend.Configuration
     {
         public void Configure(EntityTypeBuilder<Genre> builder)
         {
-            builder.ToTable("artists").HasKey(x => x.Id);
+            builder.ToTable("genres").HasKey(x => x.Id);
             builder.Property(x => x.Code).IsRequired().HasMaxLength(20);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
         }

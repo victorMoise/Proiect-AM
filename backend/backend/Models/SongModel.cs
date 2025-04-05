@@ -1,0 +1,11 @@
+﻿namespace backend.Models
+{
+    public class SongModel
+    {
+        public int Id { get; init; }
+        public string Title { get; init; }
+        public string Artist { get; init; }
+        public string Genre { get; init; }
+        public string Duration { get; init; }
+    }
+}
