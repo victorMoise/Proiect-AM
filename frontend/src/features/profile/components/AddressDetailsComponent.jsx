@@ -49,7 +49,7 @@ const AddressDetailsComponent = (props) => {
       <Grid item xs={12} md={6}>
         <Autocomplete
           fullWidth
-          options={cities}
+          options={cities || []}
           value={address?.city}
           getOptionLabel={(option) => option.name}
           onChange={onCityChange}
