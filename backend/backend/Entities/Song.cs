@@ -4,7 +4,7 @@
     {
         public int Id { get; init; }
         public string Title { get; init; }
-        public int OwnerId { get; init; }
+        public int? OwnerId { get; init; }
         public int ArtistId { get; init; }
         public int GenreId { get; init; }
         public bool IsPublic { get; init; }

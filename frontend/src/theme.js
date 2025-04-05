@@ -29,7 +29,7 @@ export const darkTheme = createTheme({
     mode: "dark",
     primary: {
       main: "#ffffff",
-      dark: "#808080",
+      dark: "#4d4d4d",
     },
     secondary: {
       main: "#505050",

@@ -3,6 +3,13 @@
     "English": "English",
     "Romanian": "Romanian"
   },
+  "Common": {
+    "Cancel": "Cancel",
+    "Save": "Save",
+    "Actions": "Actions",
+    "Close": "Close",
+    "Error": "An error occurred while processing the request"
+  },
   "Login": {
     "Error": {
       "UsernameAndPasswordRequired": "Please enter a username and password",
@@ -75,13 +82,13 @@
     "Dark": "Dark"
   },
   "Home": {
-    "Welcome": "Welcome"
-  },
-  "Common": {
-    "Cancel": "Cancel",
-    "Save": "Save",
-    "Actions": "Actions",
-    "Close": "Close",
-    "Error": "An error occurred while processing the request"
+    "Songs": {
+      "Songs": "Songs",
+      "Song": "Song",
+      "Title": "Title",
+      "Artist": "Artist",
+      "Genre": "Genre",
+      "Duration": "Duration"
+    }
   }
 }

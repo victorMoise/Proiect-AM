@@ -9,6 +9,9 @@ export const endpoints = {
     countries: "/user/countries",
     cities: "/user/cities?countryId={countryId}",
   },
+  songs: {
+    publicList: "/songs/public/list"
+  }
 };
 
 export const fit = (url, params) => {

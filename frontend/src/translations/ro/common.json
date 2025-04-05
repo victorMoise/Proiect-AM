@@ -3,6 +3,13 @@
     "English": "Engleză",
     "Romanian": "Română"
   },
+  "Common": {
+    "Cancel": "Anulează",
+    "Save": "Salvează",
+    "Actions": "Acțiuni",
+    "Close": "Închide",
+    "Error": "A apărut o eroare în timpul procesării cererii"
+  },
   "Login": {
     "Error": {
       "UsernameAndPasswordRequired": "Introduceți un nume de utilizator și o parolă",
@@ -75,13 +82,13 @@
     "Dark": "Întunecat"
   },
   "Home": {
-    "Welcome": "Bine ați venit"
-  },
-  "Common": {
-    "Cancel": "Anulează",
-    "Save": "Salvează",
-    "Actions": "Acțiuni",
-    "Close": "Închide",
-    "Error": "A apărut o eroare în timpul procesării cererii"
+    "Songs": {
+      "Songs": "Melodii",
+      "Song": "Melodie",
+      "Title": "Titlu",
+      "Artist": "Artist",
+      "Genre": "Gen",
+      "Duration": "Durată"
+    }
   }
 }
