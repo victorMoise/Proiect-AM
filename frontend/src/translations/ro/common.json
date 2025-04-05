@@ -1,0 +1,87 @@
+{
+  "Language": {
+    "English": "Engleză",
+    "Romanian": "Română"
+  },
+  "Login": {
+    "Error": {
+      "UsernameAndPasswordRequired": "Introduceți un nume de utilizator și o parolă",
+      "UsernameRequired": "Introduceți un nume de utilizator",
+      "PasswordRequired": "Introduceți o parolă",
+      "InvalidCredentials": "Numele de utilizator sau parola sunt invalide"
+    },
+    "NoAccount": "Nu aveți un cont?",
+    "CreateAccount": "Creează cont",
+    "LoginButton": "Login",
+    "Login": "Login"
+  },
+  "InputFields": {
+    "Username": "Nume de utilizator",
+    "Password": "Parolă",
+    "Email": "Email",
+    "ConfirmPassword": "Confirmați parola",
+    "TogglePasswordVisibility": "Comuta vizibilitatea parolei"
+  },
+  "Signup": {
+    "Error": {
+      "AllFieldsRequired": "Vă rugăm să completați toate câmpurile",
+      "UsernameRequired": "Vă rugăm să introduceți un nume de utilizator",
+      "PasswordRequired": "Vă rugăm să introduceți o parolă",
+      "EmailRequired": "Vă rugăm să introduceți un email",
+      "ConfirmPasswordRequired": "Vă rugăm să confirmați parola",
+      "PasswordsDoNotMatch": "Parolele nu se potrivesc"
+    },
+    "Signup": "Creează cont",
+    "AlreadyHaveAnAccount": "Aveți deja un cont?",
+    "Login": "Login",
+    "AccountCreated": "Cont creat cu succes, sunteți redirecționat la pagina de login"
+  },
+  "Sidebar": {
+    "Home": "Acasă",
+    "MyAccount": "Contul meu",
+    "Settings": "Setări",
+    "Logout": "Deconectare"
+  },
+  "MyAccount": {
+    "MyAccount": "Detalii cont",
+    "Username": "Nume de utilizator",
+    "Email": "Email",
+    "FirstName": "Prenume",
+    "LastName": "Nume",
+    "PhoneNumber": "Număr de telefon",
+    "Age": "Vârstă",
+    "Save": "Salvează",
+    "Reset": "Resetează",
+    "DetailsUpdated": "Detaliile contului au fost actualizate cu succes",
+    "Address": {
+      "Address": "Adresă",
+      "Country": "Țară",
+      "City": "Oraș",
+      "Street": "Stradă",
+      "Details": "Detalii"
+    },
+    "Error": {
+      "FetchingData": "A apărut o eroare în timpul preluării detaliilor contului",
+      "SavingDetails": "A apărut o eroare în timpul salvării detaliilor contului",
+      "CityOrCountryMissing": "Vă rugăm să completați câmpurile oraș și țară",
+      "UsernameOrEmailMissing": "Vă rugăm să completați câmpurile nume de utilizator și email"
+    }
+  },
+  "Settings": {
+    "Settings": "Setări",
+    "Language": "Limbă",
+    "Theme": "Temă",
+    "Light": "Luminos",
+    "Dark": "Întunecat"
+  },
+  "Home": {
+    "Welcome": "Bine ați venit"
+  },
+  "Common": {
+    "Cancel": "Anulează",
+    "Save": "Salvează",
+    "Actions": "Acțiuni",
+    "Close": "Închide",
+    "Error": "A apărut o eroare în timpul procesării cererii"
+  }
+}

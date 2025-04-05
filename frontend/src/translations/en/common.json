@@ -1,0 +1,87 @@
+{
+  "Language": {
+    "English": "English",
+    "Romanian": "Romanian"
+  },
+  "Login": {
+    "Error": {
+      "UsernameAndPasswordRequired": "Please enter a username and password",
+      "UsernameRequired": "Please enter a username",
+      "PasswordRequired": "Please enter a password",
+      "InvalidCredentials": "Username or password are invalid"
+    },
+    "NoAccount": "Don't have an account?",
+    "CreateAccount": "Create account",
+    "LoginButton": "Login",
+    "Login": "Login"
+  },
+  "InputFields": {
+    "Username": "Username",
+    "Password": "Password",
+    "Email": "Email",
+    "ConfirmPassword": "Confirm password",
+    "TogglePasswordVisibility": "toggle password visibility"
+  },
+  "Signup": {
+    "Error": {
+      "AllFieldsRequired": "Please fill in all fields",
+      "UsernameRequired": "Please enter a username",
+      "PasswordRequired": "Please enter a password",
+      "EmailRequired": "Please enter an email",
+      "ConfirmPasswordRequired": "Please confirm your password",
+      "PasswordsDoNotMatch": "Passwords do not match"
+    },
+    "Signup": "Sign up",
+    "AlreadyHaveAnAccount": "Already have an account?",
+    "Login": "Login",
+    "AccountCreated": "Account created successfully, redirecting to login page"
+  },
+  "Sidebar": {
+    "Home": "Home",
+    "MyAccount": "My account",
+    "Settings": "Settings",
+    "Logout": "Logout"
+  },
+  "MyAccount": {
+    "MyAccount": "Account details",
+    "Username": "Username",
+    "Email": "Email",
+    "FirstName": "First name",
+    "LastName": "Last name",
+    "PhoneNumber": "Phone number",
+    "Age": "Age",
+    "Save": "Save",
+    "Reset": "Reset",
+    "DetailsUpdated": "Account details updated successfully",
+    "Address": {
+      "Address": "Address",
+      "Country": "Country",
+      "City": "City",
+      "Street": "Street",
+      "Details": "Details"
+    },
+    "Error": {
+      "FetchingData": "An error occurred while fetching account details",
+      "SavingDetails": "An error occurred while saving account details",
+      "CityOrCountryMissing": "Please fill in city and country fields",
+      "UsernameOrEmailMissing": "Please fill in username and email fields"
+    }
+  },
+  "Settings": {
+    "Settings": "Settings",
+    "Language": "Language",
+    "Theme": "Theme",
+    "Light": "Light",
+    "Dark": "Dark"
+  },
+  "Home": {
+    "Welcome": "Welcome"
+  },
+  "Common": {
+    "Cancel": "Cancel",
+    "Save": "Save",
+    "Actions": "Actions",
+    "Close": "Close",
+    "Error": "An error occurred while processing the request"
+  }
+}
