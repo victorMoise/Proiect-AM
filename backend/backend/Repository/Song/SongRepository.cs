@@ -19,5 +19,14 @@ namespace backend.Repository.Song
                 .Include(x => x.Genre);
             return query.ToArrayAsync();
         }
+
+        public Task<E.Song?> GetSong(int songId)
+        {
+            var query = _dbContext.Songs
+                .Include(x => x.Artist)
+                .Include(x => x.Genre)
+                .Where(x => x.Id == songId);
+            return query.FirstOrDefaultAsync();
+        }
     }
 }

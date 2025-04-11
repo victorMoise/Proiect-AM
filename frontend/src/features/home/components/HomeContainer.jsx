@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PageContent from "../../../common/components/PageContent";
 import HomeComponent from "./HomeComponent";
-import { axiosInstance } from "../../../utils/axios";
+import { API_BASE_URL, axiosInstance } from "../../../utils/axios";
 import { endpoints } from "../../../utils/endpoints";
 import Toast from "../../../common/components/Toast";
 import useToast from "../../../hooks/useToast";
 import { StyledCard } from "../../../common/styles";
+import MusicPlayer from "../../../common/components/musicPlayer/MusicPlayer";
 
 const HomeContainer = () => {
   const { t } = useTranslation("common");
@@ -14,7 +15,8 @@ const HomeContainer = () => {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [playingSongId, setPlayingSongId] = useState(null);
-  
+  const [playingSongUrl, setPlayingSongUrl] = useState(null);
+
   useEffect(() => {
     const fetchSongsList = async () => {
       try {
@@ -32,11 +34,15 @@ const HomeContainer = () => {
   }, [showToast, t]);
 
   const handlePlayPause = useCallback(
-    (songId) => {
-      if (playingSongId === songId) {
+    (song) => {
+      const songUrl = `${API_BASE_URL}songs/play/${song.id}?token=${localStorage.getItem("token")}`;
+
+      if (playingSongId === song.id) {
         setPlayingSongId(null);
+        setPlayingSongUrl(null);
       } else {
-        setPlayingSongId(songId);
+        setPlayingSongId(song.id);
+        setPlayingSongUrl(songUrl);
       }
     },
     [playingSongId]
@@ -45,9 +51,19 @@ const HomeContainer = () => {
   return (
     <PageContent pageTitle={t("Sidebar.Home")}>
       <StyledCard>
-        <HomeComponent songs={songs} loading={loading} playingSongId={playingSongId} onPlayPause={handlePlayPause} />
+        <HomeComponent
+          songs={songs}
+          loading={loading}
+          playingSongId={playingSongId}
+          onPlayPause={handlePlayPause}
+        />
       </StyledCard>
       <Toast toast={toast} handleClose={handleClose} />
+      <MusicPlayer
+        songUrl={playingSongUrl}
+        onEnd={() => setPlayingSongId(null)}
+        onClose={() => setPlayingSongId(null)}
+      />
     </PageContent>
   );
 };

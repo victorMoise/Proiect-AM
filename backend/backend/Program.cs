@@ -1,3 +1,4 @@
+using backend.Middleware;
 using backend.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -74,7 +75,8 @@ app.UseHttpsRedirection();
 
 app.UseRouting();  
 
-app.UseCors("AllowReactApp"); 
+app.UseCors("AllowReactApp");
+app.UseMiddleware<QueryStringTokenMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();

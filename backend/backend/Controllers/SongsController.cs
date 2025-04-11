@@ -23,5 +23,14 @@ namespace backend.Controllers
             var result = await _mediator.Send(new GetPublicSongsList.Query());
             return Ok(result);
         }
+
+        [HttpGet("play/{id}")]
+        public async Task<IActionResult> GetSongStream(int id)
+        {
+            var query = new GetSongStream.Query { Id = id };
+            var result = await _mediator.Send(query);
+
+            return result;
+        }
     }
 }
