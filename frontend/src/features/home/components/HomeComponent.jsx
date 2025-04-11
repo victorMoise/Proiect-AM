@@ -70,7 +70,7 @@ const HomeComponent = (props) => {
           >
             <IconButton
               color="primary"
-              onClick={onPlayPause.bind(null, params.row.id)}
+              onClick={onPlayPause.bind(null, params.row)}
             >
               {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
             </IconButton>
