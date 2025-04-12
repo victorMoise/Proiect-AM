@@ -20,6 +20,13 @@ namespace backend.Repository.Song
             return query.ToArrayAsync();
         }
 
+        public Task<E.Favorite[]> GetUserFavorites(int userId)
+        {
+            var query = _dbContext.Favorites
+                .Where(x => x.UserId == userId);
+            return query.ToArrayAsync();
+        }
+
         public Task<E.Song?> GetSong(int songId)
         {
             var query = _dbContext.Songs
@@ -86,6 +93,17 @@ namespace backend.Repository.Song
 
             await _dbContext.SaveChangesAsync();
             return song;
+        }
+
+        public async Task FavoriteSong(int userId, int songId)
+        {
+            var favorite = new E.Favorite
+            {
+                UserId = userId,
+                SongId = songId
+            };
+            await _dbContext.Favorites.AddAsync(favorite);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

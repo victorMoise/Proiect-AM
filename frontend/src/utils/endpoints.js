@@ -13,7 +13,8 @@ export const endpoints = {
     publicList: "/songs/public/list",
     upload: "/songs",
     artists: "/songs/artists",
-    genres: "/songs/genres"
+    genres: "/songs/genres",
+    favorite: "/songs/favorite?songId={songId}",
   },
 };
 

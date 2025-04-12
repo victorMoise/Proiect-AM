@@ -7,5 +7,6 @@
         public string Artist { get; init; }
         public string Genre { get; init; }
         public string Duration { get; init; }
+        public bool IsFavorite { get; set; }
     }
 }
