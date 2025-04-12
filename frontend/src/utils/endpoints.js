@@ -10,8 +10,11 @@ export const endpoints = {
     cities: "/user/cities?countryId={countryId}",
   },
   songs: {
-    publicList: "/songs/public/list"
-  }
+    publicList: "/songs/public/list",
+    upload: "/songs",
+    artists: "/songs/artists",
+    genres: "/songs/genres"
+  },
 };
 
 export const fit = (url, params) => {

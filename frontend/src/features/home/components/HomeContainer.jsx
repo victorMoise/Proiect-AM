@@ -50,6 +50,11 @@ const HomeContainer = () => {
 
   return (
     <PageContent pageTitle={t("Sidebar.Home")}>
+      <MusicPlayer
+        songUrl={playingSongUrl}
+        onEnd={() => setPlayingSongId(null)}
+        onClose={() => setPlayingSongId(null)}
+      />
       <StyledCard>
         <HomeComponent
           songs={songs}
@@ -59,11 +64,6 @@ const HomeContainer = () => {
         />
       </StyledCard>
       <Toast toast={toast} handleClose={handleClose} />
-      <MusicPlayer
-        songUrl={playingSongUrl}
-        onEnd={() => setPlayingSongId(null)}
-        onClose={() => setPlayingSongId(null)}
-      />
     </PageContent>
   );
 };

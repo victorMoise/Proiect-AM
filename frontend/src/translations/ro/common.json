@@ -47,7 +47,8 @@
     "Home": "Acasă",
     "MyAccount": "Contul meu",
     "Settings": "Setări",
-    "Logout": "Deconectare"
+    "Logout": "Deconectare",
+    "MyMusic": "Melodiile mele"
   },
   "MyAccount": {
     "MyAccount": "Detalii cont",
@@ -89,6 +90,27 @@
       "Artist": "Artist",
       "Genre": "Gen",
       "Duration": "Durată"
+    }
+  },
+  "MyMusic": {
+    "Upload": {
+      "Title": "Încărcați o melodie",
+      "Success": "Melodia a fost încărcată cu succes",
+      "Error": "A apărut o eroare în timpul încărcării melodiei",
+      "Artist": "Numele artistului",
+      "Genre": "Gen",
+      "CreateNewArtist": "Sau creează un artist nou",
+      "SelectExistingArtist": "Selectează artist existent",
+      "CreateNewGenre": "Sau creează un gen nou",
+      "SelectExistingGenre": "Selectează gen existent",
+      "SetTitle": "Setați titlul melodiei",
+      "TitlePlaceholder": "Titlul melodiei mele",
+      "MakePublic": "Doriți să faceți melodia publică?",
+      "IsPublic": "Este publică",
+      "NoFile": "Nu a fost selectat niciun fișier",
+      "NoArtist": "Nu a fost selectat niciun artist",
+      "NoGenre": "Nu a fost selectat niciun gen muzical",
+      "NoTitle": "Nu a fost setat niciun titlu"
     }
   }
 }

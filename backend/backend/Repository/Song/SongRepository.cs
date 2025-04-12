@@ -28,5 +28,64 @@ namespace backend.Repository.Song
                 .Where(x => x.Id == songId);
             return query.FirstOrDefaultAsync();
         }
+
+        public Task<E.Artist[]> GetArtists()
+        {
+            var query = _dbContext.Artists;
+            return query.ToArrayAsync();
+        }
+
+        public Task<E.Genre[]> GetGenres()
+        {
+            var query = _dbContext.Genres;
+            return query.ToArrayAsync();
+        }
+
+        public Task<E.Artist?> GetArtist(int id)
+        {
+            var query = _dbContext.Artists
+                .Where(x => x.Id == id);
+            return query.FirstOrDefaultAsync();
+        }
+
+        public Task<E.Genre?> GetGenre(int id)
+        {
+            var query = _dbContext.Genres
+                .Where(x => x.Id == id);
+            return query.FirstOrDefaultAsync();
+        }
+
+        public async Task<E.Artist> SaveArtist(E.Artist artist)
+        {
+            if (artist.Id == default)
+                await _dbContext.Artists.AddAsync(artist);
+            else
+                _dbContext.Artists.Update(artist);
+
+            await _dbContext.SaveChangesAsync();
+            return artist;
+        }
+
+        public async Task<E.Genre> SaveGenre(E.Genre genre)
+        {
+            if (genre.Id == default)
+                await _dbContext.Genres.AddAsync(genre);
+            else
+                _dbContext.Genres.Update(genre);
+
+            await _dbContext.SaveChangesAsync();
+            return genre;
+        }
+
+        public async Task<E.Song> SaveSong(E.Song song)
+        {
+            if (song.Id == default)
+                await _dbContext.Songs.AddAsync(song);
+            else
+                _dbContext.Songs.Update(song);
+
+            await _dbContext.SaveChangesAsync();
+            return song;
+        }
     }
 }

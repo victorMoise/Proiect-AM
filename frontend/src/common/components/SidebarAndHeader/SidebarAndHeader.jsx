@@ -3,6 +3,7 @@ import { Box, useMediaQuery } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
+import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import { useTheme } from "@mui/material/styles";
 import { Logout } from "@mui/icons-material";
 import { useAuth } from "../../../contexts/AuthContext";
@@ -34,6 +35,13 @@ const SidebarAndHeader = (props) => {
       },
     },
     {
+      label: `${t("Sidebar.MyMusic")}`,
+      icon: <AudiotrackIcon />,
+      onClick: () => {
+        navigate("/myMusic");
+      },
+    },
+    {
       label: `${t("Sidebar.MyAccount")}`,
       icon: <PersonIcon />,
       onClick: () => {
@@ -53,7 +61,7 @@ const SidebarAndHeader = (props) => {
       onClick: () => {
         logout();
       },
-    }
+    },
   ];
 
   return (
