@@ -47,7 +47,8 @@
     "Home": "Home",
     "MyAccount": "My account",
     "Settings": "Settings",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "MyMusic": "My music"
   },
   "MyAccount": {
     "MyAccount": "Account details",
@@ -89,6 +90,27 @@
       "Artist": "Artist",
       "Genre": "Genre",
       "Duration": "Duration"
+    }
+  },
+  "MyMusic": {
+    "Upload": {
+      "Title": "Upload a song",
+      "Success": "Song uploaded successfully",
+      "Error": "An error occurred while uploading the song",
+      "Artist": "Artist name",
+      "Genre": "Genre",
+      "CreateNewArtist": "Or create a new artist",
+      "SelectExistingArtist": "Select an existing artist",
+      "CreateNewGenre": "Or create a new genre",
+      "SelectExistingGenre": "Select an existing genre",
+      "SetTitle": "Set the title/name of the song",
+      "TitlePlaceholder": "My song title",
+      "MakePublic": "Do you want to make the song public?",
+      "IsPublic": "Is public",
+      "NoFile": "No file selected",
+      "NoArtist": "No artist selected",
+      "NoGenre": "No genre selected",
+      "NoTitle": "No title set"
     }
   }
 }

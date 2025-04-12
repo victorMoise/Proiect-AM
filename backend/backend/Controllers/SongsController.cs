@@ -29,8 +29,49 @@ namespace backend.Controllers
         {
             var query = new GetSongStream.Query { Id = id };
             var result = await _mediator.Send(query);
-
             return result;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveSong([FromForm] IFormCollection formData)
+        {
+            var file = formData.Files.GetFile("File");
+            var title = formData["Title"];
+            var isPublic = formData["IsPublic"] == "yes";
+            var artistId = formData.ContainsKey("ArtistId") && !string.IsNullOrEmpty(formData["ArtistId"]) ?
+                           (int?)int.Parse(formData["ArtistId"]) : null;
+            var genreId = formData.ContainsKey("GenreId") && !string.IsNullOrEmpty(formData["GenreId"]) ?
+                          (int?)int.Parse(formData["GenreId"]) : null;
+            var newArtistName = formData["NewArtistName"];
+            var newGenreName = formData["NewGenreName"];
+
+            var query = new SaveSong.Query
+            {
+                File = file,
+                Title = title,
+                IsPublic = isPublic,
+                ArtistId = artistId,
+                GenreId = genreId,
+                NewArtistName = newArtistName,
+                NewGenreName = newGenreName
+            };
+
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet("artists")]
+        public async Task<IActionResult> GetArtists()
+        {
+            var result = await _mediator.Send(new GetArtists.Query());
+            return Ok(result);
+        }
+
+        [HttpGet("genres")]
+        public async Task<IActionResult> GetGenres()
+        {
+            var result = await _mediator.Send(new GetGenres.Query());
+            return Ok(result);
         }
     }
 }

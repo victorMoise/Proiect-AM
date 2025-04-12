@@ -7,6 +7,7 @@ import HomeContainer from "../features/home/components/HomeContainer";
 import RegisterForm from "../features/register/components/RegisterContainer";
 import ProfileContainer from "../features/profile/components/ProfileContainer";
 import SettingsContainer from "../features/settings/components/SettingsContainer";
+import MyMusicContainer from "../features/myMusic/components/MyMusicContainer";
 
 const AppRoutes = (props) => {
   const location = useLocation();
@@ -34,6 +35,10 @@ const AppRoutes = (props) => {
       <Route
         path="/home"
         element={<ProtectedRoute element={<HomeContainer />} />}
+      />
+      <Route
+        path="/myMusic"
+        element={<ProtectedRoute element={<MyMusicContainer />} />}
       />
       <Route
         path="/profile"

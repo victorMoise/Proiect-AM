@@ -6,5 +6,12 @@ namespace backend.Repository.Song
     {
         Task<E.Song[]> GetPublicSongsList();
         Task<E.Song?> GetSong(int songId);
+        Task<E.Artist[]> GetArtists();
+        Task<E.Genre[]> GetGenres();
+        Task<E.Artist?> GetArtist(int id);
+        Task<E.Genre?> GetGenre(int id);
+        Task<E.Artist> SaveArtist(E.Artist artist);
+        Task<E.Genre> SaveGenre(E.Genre genre);
+        Task<E.Song> SaveSong(E.Song song);
     }
 }
