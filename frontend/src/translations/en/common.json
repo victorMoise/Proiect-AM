@@ -89,7 +89,9 @@
       "Title": "Title",
       "Artist": "Artist",
       "Genre": "Genre",
-      "Duration": "Duration"
+      "Duration": "Duration",
+      "FavoriteAdded": "Song added to favorites",
+      "FavoriteRemoved": "Song removed from favorites"
     }
   },
   "MyMusic": {

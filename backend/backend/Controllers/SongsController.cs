@@ -73,5 +73,19 @@ namespace backend.Controllers
             var result = await _mediator.Send(new GetGenres.Query());
             return Ok(result);
         }
+
+        [HttpPut("favorite")]
+        public async Task<IActionResult> FavoriteSong([FromQuery] FavoriteSong.Query query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpPut("unfavorite")]
+        public async Task<IActionResult> UnfavoriteSong([FromQuery] UnfavoriteSong.Query query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
     }
 }

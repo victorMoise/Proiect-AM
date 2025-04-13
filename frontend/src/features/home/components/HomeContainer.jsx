@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import PageContent from "../../../common/components/PageContent";
 import HomeComponent from "./HomeComponent";
 import { API_BASE_URL, axiosInstance } from "../../../utils/axios";
-import { endpoints } from "../../../utils/endpoints";
+import { endpoints, fit } from "../../../utils/endpoints";
 import Toast from "../../../common/components/Toast";
 import useToast from "../../../hooks/useToast";
 import { StyledCard } from "../../../common/styles";
@@ -35,7 +35,9 @@ const HomeContainer = () => {
 
   const handlePlayPause = useCallback(
     (song) => {
-      const songUrl = `${API_BASE_URL}songs/play/${song.id}?token=${localStorage.getItem("token")}`;
+      const songUrl = `${API_BASE_URL}songs/play/${
+        song.id
+      }?token=${localStorage.getItem("token")}`;
 
       if (playingSongId === song.id) {
         setPlayingSongId(null);
@@ -47,6 +49,31 @@ const HomeContainer = () => {
     },
     [playingSongId]
   );
+
+  const handleFavoriteSong = useCallback(
+    async (song) => {
+      try {
+        const url = fit(endpoints.songs.favorite, { songId: song.id });
+        await axiosInstance.put(url);
+        song.isFavorite = !song.isFavorite;
+        showToast(t("Home.Songs.FavoriteAdded"), "success");
+      } catch (err) {
+        showToast(err.message || t("MyAccount.Error.FetchingData"), "error");
+      }
+    },
+    [showToast, t]
+  );
+
+  const handleUnfavoriteSong = useCallback(async (song) => {
+    try {
+      const url = fit(endpoints.songs.unfavorite, { songId: song.id });
+      await axiosInstance.put(url);
+      song.isFavorite = !song.isFavorite;
+      showToast(t("Home.Songs.FavoriteRemoved"), "success");
+    } catch (err) {
+      showToast(err.message || t("MyAccount.Error.FetchingData"), "error");
+    }
+  }, [showToast, t]);
 
   return (
     <PageContent pageTitle={t("Sidebar.Home")}>
@@ -61,6 +88,8 @@ const HomeContainer = () => {
           loading={loading}
           playingSongId={playingSongId}
           onPlayPause={handlePlayPause}
+          onFavoriteSong={handleFavoriteSong}
+          onUnfavoriteSong={handleUnfavoriteSong}
         />
       </StyledCard>
       <Toast toast={toast} handleClose={handleClose} />

@@ -7,13 +7,22 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box, IconButton } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const paginationModel = { page: 0, pageSize: 10 };
 const pageSizeOptions = [5, 10, 20, 50];
 
 const HomeComponent = (props) => {
   const { t } = useTranslation("common");
-  const { songs, loading, playingSongId, onPlayPause } = props;
+  const {
+    songs,
+    loading,
+    playingSongId,
+    onPlayPause,
+    onFavoriteSong,
+    onUnfavoriteSong,
+  } = props;
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -59,26 +68,40 @@ const HomeComponent = (props) => {
         filterable: false,
         renderCell: (params) => {
           const isPlaying = playingSongId === params.row.id;
+          const isFavorite = params.row.isFavorite;
 
-          return <Box
-            sx={{
-              display: "flex",
-              gap: 1,
-              justifyContent: "flex-end",
-              width: "100%",
-            }}
-          >
-            <IconButton
-              color="primary"
-              onClick={onPlayPause.bind(null, params.row)}
+          return (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+                width: "100%",
+                height: "100%",
+              }}
             >
-              {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
-            </IconButton>
-          </Box>
+              <IconButton
+                color={isFavorite ? "error" : "default"}
+                onClick={
+                  !isFavorite
+                    ? onFavoriteSong.bind(null, params.row)
+                    : onUnfavoriteSong.bind(null, params.row)
+                }
+              >
+                {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              </IconButton>
+              <IconButton
+                color="primary"
+                onClick={onPlayPause.bind(null, params.row)}
+              >
+                {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
+              </IconButton>
+            </Box>
+          );
         },
       },
     ],
-    [t, isMobile, playingSongId, onPlayPause]
+    [t, isMobile, playingSongId, onFavoriteSong, onUnfavoriteSong, onPlayPause]
   );
 
   if (loading) return <FakeText lines={10} />;
