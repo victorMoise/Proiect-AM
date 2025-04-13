@@ -85,7 +85,7 @@ const HomeComponent = (props) => {
                 onClick={
                   !isFavorite
                     ? onFavoriteSong.bind(null, params.row)
-                    : onUnfavoriteSong(null, params.row)
+                    : onUnfavoriteSong.bind(null, params.row)
                 }
               >
                 {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}

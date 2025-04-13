@@ -105,5 +105,16 @@ namespace backend.Repository.Song
             await _dbContext.Favorites.AddAsync(favorite);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task UnfavoriteSong(int userId, int songId)
+        {
+            var favorite = await _dbContext.Favorites
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.SongId == songId);
+            if (favorite != null)
+            {
+                _dbContext.Favorites.Remove(favorite);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
     }
 }

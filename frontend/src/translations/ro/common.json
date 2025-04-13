@@ -89,7 +89,9 @@
       "Title": "Titlu",
       "Artist": "Artist",
       "Genre": "Gen",
-      "Duration": "Durată"
+      "Duration": "Durată",
+      "FavoriteAdded": "Melodie adăugată la favorite",
+      "FavoriteRemoved": "Melodie ștearsă din favorite"
     }
   },
   "MyMusic": {

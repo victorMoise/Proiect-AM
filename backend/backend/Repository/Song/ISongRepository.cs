@@ -15,5 +15,6 @@ namespace backend.Repository.Song
         Task<E.Genre> SaveGenre(E.Genre genre);
         Task<E.Song> SaveSong(E.Song song);
         Task FavoriteSong(int userId, int songId);
+        Task UnfavoriteSong(int userId, int songId);
     }
 }

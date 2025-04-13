@@ -53,7 +53,7 @@ const HomeContainer = () => {
   const handleFavoriteSong = useCallback(
     async (song) => {
       try {
-        const url = fit(endpoints.songs.favorite, {songId: song.id});
+        const url = fit(endpoints.songs.favorite, { songId: song.id });
         await axiosInstance.put(url);
         song.isFavorite = !song.isFavorite;
         showToast(t("Home.Songs.FavoriteAdded"), "success");
@@ -64,12 +64,16 @@ const HomeContainer = () => {
     [showToast, t]
   );
 
-  const handleUnfavoriteSong = useCallback(
-    async (song) => {
-      return null;
-    },
-    []
-  );
+  const handleUnfavoriteSong = useCallback(async (song) => {
+    try {
+      const url = fit(endpoints.songs.unfavorite, { songId: song.id });
+      await axiosInstance.put(url);
+      song.isFavorite = !song.isFavorite;
+      showToast(t("Home.Songs.FavoriteRemoved"), "success");
+    } catch (err) {
+      showToast(err.message || t("MyAccount.Error.FetchingData"), "error");
+    }
+  }, [showToast, t]);
 
   return (
     <PageContent pageTitle={t("Sidebar.Home")}>

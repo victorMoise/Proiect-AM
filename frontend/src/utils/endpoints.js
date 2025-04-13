@@ -15,6 +15,7 @@ export const endpoints = {
     artists: "/songs/artists",
     genres: "/songs/genres",
     favorite: "/songs/favorite?songId={songId}",
+    unfavorite: "/songs/unfavorite?songId={songId}",
   },
 };
 
