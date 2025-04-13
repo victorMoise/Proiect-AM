@@ -8,7 +8,9 @@
     "Save": "Save",
     "Actions": "Actions",
     "Close": "Close",
-    "Error": "An error occurred while processing the request"
+    "Error": "An error occurred while processing the request",
+    "Edit": "Edit",
+    "Delete": "Delete"
   },
   "Login": {
     "Error": {
@@ -91,7 +93,8 @@
       "Genre": "Genre",
       "Duration": "Duration",
       "FavoriteAdded": "Song added to favorites",
-      "FavoriteRemoved": "Song removed from favorites"
+      "FavoriteRemoved": "Song removed from favorites",
+      "ErrorFetchingData": "An error occurred while fetching songs"
     }
   },
   "MyMusic": {

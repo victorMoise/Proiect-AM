@@ -8,7 +8,9 @@
     "Save": "Salvează",
     "Actions": "Acțiuni",
     "Close": "Închide",
-    "Error": "A apărut o eroare în timpul procesării cererii"
+    "Error": "A apărut o eroare în timpul procesării cererii",
+    "Edit": "Editează",
+    "Delete": "Șterge"
   },
   "Login": {
     "Error": {
@@ -91,7 +93,8 @@
       "Genre": "Gen",
       "Duration": "Durată",
       "FavoriteAdded": "Melodie adăugată la favorite",
-      "FavoriteRemoved": "Melodie ștearsă din favorite"
+      "FavoriteRemoved": "Melodie ștearsă din favorite",
+      "ErrorFetchingData": "A apărut o eroare în timpul preluării melodiilor"
     }
   },
   "MyMusic": {

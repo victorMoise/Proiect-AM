@@ -116,5 +116,14 @@ namespace backend.Repository.Song
                 await _dbContext.SaveChangesAsync();
             }
         }
+
+        public async Task<E.Song[]> GetUserUploads(int userId)
+        {
+            var query = _dbContext.Songs
+                .Include(x => x.Artist)
+                .Include(x => x.Genre)
+                .Where(x => x.OwnerId == userId);
+            return await query.ToArrayAsync();
+        }
     }
 }
