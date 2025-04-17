@@ -94,5 +94,12 @@ namespace backend.Controllers
             var result = await _mediator.Send(new GetUserUploads.Query());
             return Ok(result);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateSong([FromBody] UpdateSong.Query query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
     }
 }

@@ -115,7 +115,11 @@
       "NoFile": "Nu a fost selectat niciun fișier",
       "NoArtist": "Nu a fost selectat niciun artist",
       "NoGenre": "Nu a fost selectat niciun gen muzical",
-      "NoTitle": "Nu a fost setat niciun titlu"
+      "NoTitle": "Nu a fost setat niciun titlu",
+      "ErrorFetchingArtists": "A apărut o eroare în timpul preluării artiștilor",
+      "ErrorFetchingGenres": "A apărut o eroare în timpul preluării genurilor muzicale",
+      "EditSuccess": "Melodia a fost actualizată cu succes",
+      "EditError": "A apărut o eroare în timpul actualizării melodiei"
     }
   }
 }

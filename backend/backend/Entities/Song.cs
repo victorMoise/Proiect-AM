@@ -3,10 +3,10 @@
     public class Song
     {
         public int Id { get; init; }
-        public string Title { get; init; }
+        public string Title { get; set; }
         public int? OwnerId { get; init; }
-        public int ArtistId { get; init; }
-        public int GenreId { get; init; }
+        public int ArtistId { get; set; }
+        public int GenreId { get; set; }
         public bool IsPublic { get; init; }
         public string FilePath { get; init; }
         public int Duration { get; init; } // in seconds

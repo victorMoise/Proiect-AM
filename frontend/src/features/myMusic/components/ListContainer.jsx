@@ -16,27 +16,26 @@ const ListContainer = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedSong, setSelectedSong] = useState(null);
 
-  useEffect(() => {
-    const fetchSongsList = async () => {
-      try {
-        const songsList = await axiosInstance.get(endpoints.songs.userUploads);
-        setSongs(songsList.data);
-      } catch (err) {
-        showToast(err.message || t("Home.Error.FetchingData"), "error");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSongsList();
+  const fetchSongsList = useCallback(async () => {
+    try {
+      const songsList = await axiosInstance.get(endpoints.songs.userUploads);
+      setSongs(songsList.data);
+    } catch (err) {
+      showToast(err.message || t("Home.Error.FetchingData"), "error");
+    } finally {
+      setLoading(false);
+    }
   }, [showToast, t]);
+
+  useEffect(() => {
+    fetchSongsList();
+  }, [fetchSongsList, showToast, t]);
 
   const handleOpenDialog = useCallback((song) => {
     setEditDialogOpen(true);
     setSelectedSong(song);
   }, []);
   const handleCloseDialog = useCallback(() => setEditDialogOpen(false), []);
-  const handleSaveSong = useCallback(() => {}, []);
 
   return (
     <StyledCard>
@@ -50,8 +49,8 @@ const ListContainer = () => {
         <EditDialog
           onClose={handleCloseDialog}
           open={editDialogOpen}
-          onSave={handleSaveSong}
           propsSong={selectedSong}
+          onRefetch={fetchSongsList}
         />
       )}
     </StyledCard>

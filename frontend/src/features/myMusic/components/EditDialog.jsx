@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Button,
   Dialog,
   DialogActions,
@@ -15,15 +16,18 @@ import useToast from "../../../hooks/useToast";
 import Toast from "../../../common/components/Toast";
 
 const EditDialog = (props) => {
-  const { open, onClose, onSave, propsSong } = props;
-  const { toast, showToast, handleClose } = useToast();
+  const { open, onClose, propsSong, onRefetch } = props;
+  const { toast, handleClose, showToast } = useToast();
   const { t } = useTranslation("common");
-  const [song, setSong] = useState(propsSong);
   const [artists, setArtists] = useState([]);
   const [genres, setGenres] = useState([]);
+  const [artist, setArtist] = useState(null);
+  const [genre, newGenre] = useState(null);
+  const [title, setTitle] = useState(propsSong.title);
 
   const handleTitleChange = useCallback((e) => {
-    setSong((prevSong) => ({ ...prevSong, title: e.target.value }));
+    const { value } = e.target;
+    setTitle(value);
   }, []);
 
   useEffect(() => {
@@ -59,6 +63,52 @@ const EditDialog = (props) => {
     fetchArtists();
   }, [showToast, t]);
 
+  useEffect(() => {
+    setArtist(artists.find((a) => a.id === propsSong.artistId) || null);
+    newGenre(genres.find((g) => g.id === propsSong.genreId) || null);
+  }, [propsSong.artistId, propsSong.genreId, artists, genres]);
+
+  const handleArtistChange = useCallback((_event, newValue) => {
+    setArtist(newValue);
+  }, []);
+
+  const handleGenreChange = useCallback((_event, newValue) => {
+    newGenre(newValue);
+  }, []);
+
+  const handleSave = useCallback(async () => {
+    try {
+      const updatedSong = {
+        songId: propsSong.id,
+        songTitle: propsSong.title,
+        artistId: artist ? artist.id : null,
+        genreId: genre ? genre.id : null,
+      };
+      await axiosInstance.put(endpoints.songs.upload, updatedSong);
+      showToast(t("MyMusic.Upload.EditSuccess"), "success");
+      onRefetch();
+      setTimeout(() => {
+        onClose();
+      }, 1000);
+    } catch (error) {
+      showToast(
+        error?.response?.data?.message ||
+          error?.message ||
+          t("MyMusic.Upload.EditError"),
+        "error"
+      );
+    }
+  }, [
+    artist,
+    genre,
+    onClose,
+    onRefetch,
+    showToast,
+    propsSong.id,
+    propsSong.title,
+    t,
+  ]);
+
   return (
     <Dialog
       open={open}
@@ -78,8 +128,32 @@ const EditDialog = (props) => {
             <TextField
               fullWidth
               label={t("Home.Songs.Title")}
-              value={song.title}
+              value={title}
               onChange={handleTitleChange}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Autocomplete
+              fullWidth
+              options={artists || []}
+              value={artist}
+              getOptionLabel={(option) => option.name}
+              onChange={handleArtistChange}
+              renderInput={(params) => (
+                <TextField {...params} label={t("Home.Songs.Artist")} />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Autocomplete
+              fullWidth
+              options={genres || []}
+              value={genre}
+              getOptionLabel={(option) => option.name}
+              onChange={handleGenreChange}
+              renderInput={(params) => (
+                <TextField {...params} label={t("Home.Songs.Genre")} />
+              )}
             />
           </Grid>
         </Grid>
@@ -88,7 +162,7 @@ const EditDialog = (props) => {
         <Button onClick={onClose} color="error" variant="contained">
           {t("Common.Cancel")}
         </Button>
-        <Button onClick={onSave} color="success" variant="contained">
+        <Button onClick={handleSave} color="success" variant="contained">
           {t("Common.Save")}
         </Button>
       </DialogActions>

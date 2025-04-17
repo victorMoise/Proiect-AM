@@ -115,7 +115,11 @@
       "NoFile": "No file selected",
       "NoArtist": "No artist selected",
       "NoGenre": "No genre selected",
-      "NoTitle": "No title set"
+      "NoTitle": "No title set",
+      "ErrorFetchingArtists": "An error occurred while fetching artists",
+      "ErrorFetchingGenres": "An error occurred while fetching genres",
+      "EditSuccess": "Song updated successfully",
+      "EditError": "An error occurred while updating the song"
     }
   }
 }
