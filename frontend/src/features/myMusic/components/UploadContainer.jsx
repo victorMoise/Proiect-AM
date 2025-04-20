@@ -120,7 +120,7 @@ const UploadContainer = () => {
     formData.append("IsPublic", isPublic ? "true" : "false");
 
     try {
-      await axiosInstance.post(endpoints.songs.upload, formData, {
+      await axiosInstance.post(endpoints.songs.generic, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,

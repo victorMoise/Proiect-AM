@@ -8,7 +8,13 @@
     "Save": "Salvează",
     "Actions": "Acțiuni",
     "Close": "Închide",
-    "Error": "A apărut o eroare în timpul procesării cererii"
+    "Error": "A apărut o eroare în timpul procesării cererii",
+    "Edit": "Editează",
+    "Delete": "Șterge",
+    "Yes": "Da",
+    "No": "Nu",
+    "ConfirmDeleteTitle": "Confirmați ștergerea",
+    "ConfirmDeleteMessage": "Sunteți sigur că doriți să ștergeți acest element?"
   },
   "Login": {
     "Error": {
@@ -91,7 +97,8 @@
       "Genre": "Gen",
       "Duration": "Durată",
       "FavoriteAdded": "Melodie adăugată la favorite",
-      "FavoriteRemoved": "Melodie ștearsă din favorite"
+      "FavoriteRemoved": "Melodie ștearsă din favorite",
+      "ErrorFetchingData": "A apărut o eroare în timpul preluării melodiilor"
     }
   },
   "MyMusic": {
@@ -112,7 +119,13 @@
       "NoFile": "Nu a fost selectat niciun fișier",
       "NoArtist": "Nu a fost selectat niciun artist",
       "NoGenre": "Nu a fost selectat niciun gen muzical",
-      "NoTitle": "Nu a fost setat niciun titlu"
+      "NoTitle": "Nu a fost setat niciun titlu",
+      "ErrorFetchingArtists": "A apărut o eroare în timpul preluării artiștilor",
+      "ErrorFetchingGenres": "A apărut o eroare în timpul preluării genurilor muzicale",
+      "EditSuccess": "Melodia a fost actualizată cu succes",
+      "EditError": "A apărut o eroare în timpul actualizării melodiei",
+      "DeleteSuccess": "Melodia a fost ștearsă cu succes",
+      "DeleteError": "A apărut o eroare în timpul ștergerii melodiei"
     }
   }
 }

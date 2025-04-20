@@ -103,7 +103,7 @@ namespace backend.Queries.Songs
                     genre = entitiy;
                 }
 
-                var songsFolderPath = Path.Combine("C:", "proiecte", "Proiect-AM", "backend", "songs");
+                var songsFolderPath = _configuration.GetSection("Songs").GetValue<string>("FolderPath");
                 await SaveFileAsync(request.File, request.Title, artist.Name, songsFolderPath);
 
                 var userId = _tokenService.GetUserId();
@@ -143,7 +143,6 @@ namespace backend.Queries.Songs
                     await file.CopyToAsync(stream);
                 }
             }
-
 
             private static string Truncte(string item, int maxLength)
             {

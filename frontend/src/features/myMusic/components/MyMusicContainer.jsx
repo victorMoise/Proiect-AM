@@ -9,8 +9,8 @@ const MyMusicContainer = () => {
 
   return (
     <PageContent pageTitle={t("Sidebar.MyMusic")}>
-      <ListContainer />
       <UploadContainer />
+      <ListContainer />
     </PageContent>
   );
 };

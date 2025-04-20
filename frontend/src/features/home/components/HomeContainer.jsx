@@ -24,7 +24,7 @@ const HomeContainer = () => {
 
         setSongs(songsList.data);
       } catch (err) {
-        showToast(err.message || t("MyAccount.Error.FetchingData"), "error");
+        showToast(err.message || t("Home.Songs.ErrorFetchingData"), "error");
       } finally {
         setLoading(false);
       }
@@ -58,7 +58,7 @@ const HomeContainer = () => {
         song.isFavorite = !song.isFavorite;
         showToast(t("Home.Songs.FavoriteAdded"), "success");
       } catch (err) {
-        showToast(err.message || t("MyAccount.Error.FetchingData"), "error");
+        showToast(err.message || t("Home.Songs.ErrorFetchingData"), "error");
       }
     },
     [showToast, t]
@@ -71,7 +71,7 @@ const HomeContainer = () => {
       song.isFavorite = !song.isFavorite;
       showToast(t("Home.Songs.FavoriteRemoved"), "success");
     } catch (err) {
-      showToast(err.message || t("MyAccount.Error.FetchingData"), "error");
+      showToast(err.message || t("Home.Songs.ErrorFetchingData"), "error");
     }
   }, [showToast, t]);
 

@@ -87,5 +87,26 @@ namespace backend.Controllers
             var result = await _mediator.Send(query);
             return Ok(result);
         }
+
+        [HttpGet("user/uploads")]
+        public async Task<IActionResult> GetUserUploads()
+        {
+            var result = await _mediator.Send(new GetUserUploads.Query());
+            return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateSong([FromBody] UpdateSong.Query query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteSong([FromBody] DeleteSong.Query query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
     }
 }

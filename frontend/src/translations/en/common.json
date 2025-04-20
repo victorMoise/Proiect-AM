@@ -8,7 +8,13 @@
     "Save": "Save",
     "Actions": "Actions",
     "Close": "Close",
-    "Error": "An error occurred while processing the request"
+    "Error": "An error occurred while processing the request",
+    "Edit": "Edit",
+    "Delete": "Delete",
+    "Yes": "Yes",
+    "No": "No",
+    "ConfirmDeleteTitle": "Confirm delete",
+    "ConfirmDeleteMessage": "Are you sure you want to delete this?"
   },
   "Login": {
     "Error": {
@@ -91,7 +97,8 @@
       "Genre": "Genre",
       "Duration": "Duration",
       "FavoriteAdded": "Song added to favorites",
-      "FavoriteRemoved": "Song removed from favorites"
+      "FavoriteRemoved": "Song removed from favorites",
+      "ErrorFetchingData": "An error occurred while fetching songs"
     }
   },
   "MyMusic": {
@@ -112,7 +119,13 @@
       "NoFile": "No file selected",
       "NoArtist": "No artist selected",
       "NoGenre": "No genre selected",
-      "NoTitle": "No title set"
+      "NoTitle": "No title set",
+      "ErrorFetchingArtists": "An error occurred while fetching artists",
+      "ErrorFetchingGenres": "An error occurred while fetching genres",
+      "EditSuccess": "Song updated successfully",
+      "EditError": "An error occurred while updating the song",
+      "DeleteSuccess": "Song deleted successfully",
+      "DeleteError": "An error occurred while deleting the song"
     }
   }
 }

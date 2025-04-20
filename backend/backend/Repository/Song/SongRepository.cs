@@ -116,5 +116,28 @@ namespace backend.Repository.Song
                 await _dbContext.SaveChangesAsync();
             }
         }
+
+        public async Task<E.Song[]> GetUserUploads(int userId)
+        {
+            var query = _dbContext.Songs
+                .Include(x => x.Artist)
+                .Include(x => x.Genre)
+                .Where(x => x.OwnerId == userId);
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<E.Song?> DeleteSong(int songId)
+        {
+            var song = await _dbContext.Songs
+                .Include(x => x.Artist)
+                .Include(x => x.Genre)
+                .FirstOrDefaultAsync(x => x.Id == songId);
+            if (song != null)
+            {
+                _dbContext.Songs.Remove(song);
+                await _dbContext.SaveChangesAsync();
+            }
+            return song;
+        }
     }
 }
