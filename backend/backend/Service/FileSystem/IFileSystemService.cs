@@ -3,5 +3,6 @@
     public interface IFileSystemService
     {
         Task DeleteFile(string path);
+        Task DeleteFolder(string path);
     }
 }

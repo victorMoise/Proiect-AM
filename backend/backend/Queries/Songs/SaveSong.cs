@@ -104,7 +104,6 @@ namespace backend.Queries.Songs
                 }
 
                 var songsFolderPath = _configuration.GetSection("Songs").GetValue<string>("FolderPath");
-                await SaveFileAsync(request.File, request.Title, artist.Name, songsFolderPath);
 
                 var userId = _tokenService.GetUserId();
                 var song = new Song
@@ -119,6 +118,7 @@ namespace backend.Queries.Songs
                 };
 
                 await _songRepository.SaveSong(song);
+                await SaveFileAsync(request.File, request.Title, artist.Name, songsFolderPath);
                 return new Model { Message = "Song saved successfully" };
             }
 
