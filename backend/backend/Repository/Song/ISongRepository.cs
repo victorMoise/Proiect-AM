@@ -17,5 +17,6 @@ namespace backend.Repository.Song
         Task FavoriteSong(int userId, int songId);
         Task UnfavoriteSong(int userId, int songId);
         Task<E.Song[]> GetUserUploads(int userId);
+        Task<E.Song?> DeleteSong(int songId);
     }
 }

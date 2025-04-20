@@ -101,5 +101,12 @@ namespace backend.Controllers
             var result = await _mediator.Send(query);
             return Ok(result);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteSong([FromBody] DeleteSong.Query query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
     }
 }

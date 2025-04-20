@@ -10,7 +10,9 @@
     "Close": "Închide",
     "Error": "A apărut o eroare în timpul procesării cererii",
     "Edit": "Editează",
-    "Delete": "Șterge"
+    "Delete": "Șterge",
+    "Yes": "Da",
+    "No": "Nu"
   },
   "Login": {
     "Error": {
@@ -119,7 +121,9 @@
       "ErrorFetchingArtists": "A apărut o eroare în timpul preluării artiștilor",
       "ErrorFetchingGenres": "A apărut o eroare în timpul preluării genurilor muzicale",
       "EditSuccess": "Melodia a fost actualizată cu succes",
-      "EditError": "A apărut o eroare în timpul actualizării melodiei"
+      "EditError": "A apărut o eroare în timpul actualizării melodiei",
+      "DeleteSuccess": "Melodia a fost ștearsă cu succes",
+      "DeleteError": "A apărut o eroare în timpul ștergerii melodiei"
     }
   }
 }

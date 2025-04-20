@@ -10,7 +10,9 @@
     "Close": "Close",
     "Error": "An error occurred while processing the request",
     "Edit": "Edit",
-    "Delete": "Delete"
+    "Delete": "Delete",
+    "Yes": "Yes",
+    "No": "No"
   },
   "Login": {
     "Error": {
@@ -119,7 +121,9 @@
       "ErrorFetchingArtists": "An error occurred while fetching artists",
       "ErrorFetchingGenres": "An error occurred while fetching genres",
       "EditSuccess": "Song updated successfully",
-      "EditError": "An error occurred while updating the song"
+      "EditError": "An error occurred while updating the song",
+      "DeleteSuccess": "Song deleted successfully",
+      "DeleteError": "An error occurred while deleting the song"
     }
   }
 }

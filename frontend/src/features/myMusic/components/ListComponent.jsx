@@ -11,7 +11,7 @@ const paginationModel = { page: 0, pageSize: 10 };
 const pageSizeOptions = [5, 10, 20, 50];
 
 const ListComponent = (props) => {
-  const { songs, loading, onOpen } = props;
+  const { songs, loading, onOpen, onDelete } = props;
   const { t } = useTranslation("common");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -73,7 +73,7 @@ const ListComponent = (props) => {
               </Tooltip>
 
               <Tooltip title={t("Common.Delete")}>
-                <IconButton color="error" onClick={() => {}}>
+                <IconButton color="error" onClick={onDelete.bind(null, params.row)}>
                   <DeleteIcon />
                 </IconButton>
               </Tooltip>
@@ -82,7 +82,7 @@ const ListComponent = (props) => {
         },
       },
     ],
-    [t, isMobile, onOpen]
+    [t, isMobile, onOpen, onDelete]
   );
 
   if (loading) return <FakeText lines={10} />;

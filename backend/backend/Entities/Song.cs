@@ -7,7 +7,7 @@
         public int? OwnerId { get; init; }
         public int ArtistId { get; set; }
         public int GenreId { get; set; }
-        public bool IsPublic { get; init; }
+        public bool IsPublic { get; set; }
         public string FilePath { get; init; }
         public int Duration { get; init; } // in seconds
 

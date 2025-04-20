@@ -35,7 +35,23 @@ const ListContainer = () => {
     setEditDialogOpen(true);
     setSelectedSong(song);
   }, []);
+
   const handleCloseDialog = useCallback(() => setEditDialogOpen(false), []);
+
+  const handleDelete = useCallback(
+    async (song) => {
+      try {
+        await axiosInstance.delete(endpoints.songs.generic, {
+          data: { songId: song.id },
+        });
+        showToast(t("MyMusic.Upload.DeleteSuccess"), "success");
+        fetchSongsList();
+      } catch (err) {
+        showToast(err.message || t("MyMusic.Upload.DeleteError"), "error");
+      }
+    },
+    [fetchSongsList, showToast, t]
+  );
 
   return (
     <StyledCard>
@@ -43,6 +59,7 @@ const ListContainer = () => {
         songs={songs}
         loading={loading}
         onOpen={handleOpenDialog}
+        onDelete={handleDelete}
       />
       <Toast toast={toast} handleClose={handleClose} />
       {editDialogOpen && (

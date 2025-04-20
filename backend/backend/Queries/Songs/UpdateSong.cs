@@ -11,6 +11,7 @@ namespace backend.Queries.Songs
             public string SongTitle { get; init; }
             public int ArtistId { get; init; }
             public int GenreId { get; init; }
+            public bool IsPublic { get; init; }
         }
 
         public record Model
@@ -38,6 +39,7 @@ namespace backend.Queries.Songs
                 song.Title = request.SongTitle;
                 song.ArtistId = request.ArtistId;
                 song.GenreId = request.GenreId;
+                song.IsPublic = request.IsPublic;
 
                 await _songRepository.SaveSong(song);
 

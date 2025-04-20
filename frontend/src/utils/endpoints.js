@@ -11,7 +11,7 @@ export const endpoints = {
   },
   songs: {
     publicList: "/songs/public/list",
-    upload: "/songs",
+    generic: "/songs",
     artists: "/songs/artists",
     genres: "/songs/genres",
     favorite: "/songs/favorite?songId={songId}",

@@ -24,6 +24,7 @@ const EditDialog = (props) => {
   const [artist, setArtist] = useState(null);
   const [genre, newGenre] = useState(null);
   const [title, setTitle] = useState(propsSong.title);
+  const [isPublic, setIsPublic] = useState(propsSong.isPublic);
 
   const handleTitleChange = useCallback((e) => {
     const { value } = e.target;
@@ -64,8 +65,8 @@ const EditDialog = (props) => {
   }, [showToast, t]);
 
   useEffect(() => {
-    setArtist(artists.find((a) => a.id === propsSong.artistId) || null);
-    newGenre(genres.find((g) => g.id === propsSong.genreId) || null);
+    setArtist(artists.find((a) => a?.id === propsSong.artistId) || null);
+    newGenre(genres.find((g) => g?.id === propsSong.genreId) || null);
   }, [propsSong.artistId, propsSong.genreId, artists, genres]);
 
   const handleArtistChange = useCallback((_event, newValue) => {
@@ -80,11 +81,12 @@ const EditDialog = (props) => {
     try {
       const updatedSong = {
         songId: propsSong.id,
-        songTitle: propsSong.title,
-        artistId: artist ? artist.id : null,
-        genreId: genre ? genre.id : null,
+        songTitle: title,
+        artistId: artist?.id,
+        genreId: genre?.id,
+        isPublic: isPublic,
       };
-      await axiosInstance.put(endpoints.songs.upload, updatedSong);
+      await axiosInstance.put(endpoints.songs.generic, updatedSong);
       showToast(t("MyMusic.Upload.EditSuccess"), "success");
       onRefetch();
       setTimeout(() => {
@@ -99,14 +101,15 @@ const EditDialog = (props) => {
       );
     }
   }, [
+    propsSong,
+    title,
     artist,
     genre,
-    onClose,
-    onRefetch,
+    isPublic,
     showToast,
-    propsSong.id,
-    propsSong.title,
     t,
+    onRefetch,
+    onClose,
   ]);
 
   return (
@@ -132,7 +135,7 @@ const EditDialog = (props) => {
               onChange={handleTitleChange}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12}>
             <Autocomplete
               fullWidth
               options={artists || []}
@@ -153,6 +156,25 @@ const EditDialog = (props) => {
               onChange={handleGenreChange}
               renderInput={(params) => (
                 <TextField {...params} label={t("Home.Songs.Genre")} />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Autocomplete
+              fullWidth
+              options={[
+                { label: t("Common.Yes"), value: true },
+                { label: t("Common.No"), value: false },
+              ]}
+              value={
+                isPublic
+                  ? { label: t("Common.Yes"), value: true }
+                  : { label: t("Common.No"), value: false }
+              }
+              getOptionLabel={(option) => option.label}
+              onChange={(_event, newValue) => setIsPublic(newValue?.value)}
+              renderInput={(params) => (
+                <TextField {...params} label={t("MyMusic.Upload.IsPublic")} />
               )}
             />
           </Grid>
