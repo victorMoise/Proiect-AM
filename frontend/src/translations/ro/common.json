@@ -12,7 +12,9 @@
     "Edit": "Editează",
     "Delete": "Șterge",
     "Yes": "Da",
-    "No": "Nu"
+    "No": "Nu",
+    "ConfirmDeleteTitle": "Confirmați ștergerea",
+    "ConfirmDeleteMessage": "Sunteți sigur că doriți să ștergeți acest element?"
   },
   "Login": {
     "Error": {

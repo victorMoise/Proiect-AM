@@ -12,7 +12,9 @@
     "Edit": "Edit",
     "Delete": "Delete",
     "Yes": "Yes",
-    "No": "No"
+    "No": "No",
+    "ConfirmDeleteTitle": "Confirm delete",
+    "ConfirmDeleteMessage": "Are you sure you want to delete this?"
   },
   "Login": {
     "Error": {
