@@ -16,7 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 
-const ListContainer = () => {
+const ListContainer = ({ refreshKey }) => {
   const { t } = useTranslation("common");
   const { toast, showToast, handleClose } = useToast();
 
@@ -39,6 +39,10 @@ const ListContainer = () => {
       setLoading(false);
     }
   }, [showToast, t]);
+
+    useEffect(() => {
+      fetchSongsList(); 
+    }, [fetchSongsList, refreshKey]);
 
   useEffect(() => {
     fetchSongsList();

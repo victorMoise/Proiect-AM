@@ -7,7 +7,7 @@ import UploadComponent from "./UploadComponent";
 import { axiosInstance } from "../../../utils/axios";
 import { endpoints } from "../../../utils/endpoints";
 
-const UploadContainer = () => {
+const UploadContainer = ({ onUploadSuccess }) => {
   const [file, setFile] = useState(null);
   const { toast, showToast, handleClose } = useToast();
   const { t } = useTranslation("common");
@@ -128,6 +128,13 @@ const UploadContainer = () => {
       });
 
       setFile(null);
+      setArtist(null);
+      setNewArtist("");
+      setGenre(null);
+      setNewGenre("");
+      setTitle("");
+      setIsPublic(false);
+      if (onUploadSuccess) onUploadSuccess();
       showToast(t("MyMusic.Upload.Success"), "success");
     } catch (error) {
       showToast(
@@ -137,7 +144,7 @@ const UploadContainer = () => {
         "error"
       );
     }
-  }, [file, genre, newGenre, artist, newArtist, title, isPublic, showToast, t]);
+  }, [file, artist, newArtist, genre, newGenre, title, isPublic, showToast, t, onUploadSuccess]);
 
   const handleReset = useCallback(() => {
     setFile(null);

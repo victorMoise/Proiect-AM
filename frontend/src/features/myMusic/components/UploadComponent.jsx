@@ -48,6 +48,7 @@ const UploadComponent = (props) => {
         <Box display="flex" alignItems="center">
           <input
             type="file"
+            accept=".mp3"
             ref={selectFileButtonRef}
             style={{ display: "none" }}
             onChange={onSetFile}
