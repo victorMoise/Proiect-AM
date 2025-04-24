@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using backend.Entities;
 using backend.Repository.Song;
+using backend.Service.FileSystem;
 using backend.Service.Token;
 using FluentValidation;
 using MediatR;
@@ -52,13 +53,15 @@ namespace backend.Queries.Songs
             private readonly IMapper _mapper;
             private readonly IConfiguration _configuration;
             private readonly ITokenService _tokenService;
+            private readonly IFileSystemService _fileSystemService;
 
-            public QueryHandler(ISongRepository songRepository, IMapper mapper, IConfiguration configuration, ITokenService tokenService)
+            public QueryHandler(ISongRepository songRepository, IMapper mapper, IConfiguration configuration, ITokenService tokenService, IFileSystemService fileSystemService)
             {
                 _songRepository = songRepository;
                 _mapper = mapper;
                 _configuration = configuration;
                 _tokenService = tokenService;
+                _fileSystemService = fileSystemService;
             }
 
             public async Task<Model> Handle(Query request, CancellationToken cancellationToken)
@@ -104,7 +107,7 @@ namespace backend.Queries.Songs
                 }
 
                 var songsFolderPath = _configuration.GetSection("Songs").GetValue<string>("FolderPath");
-                await SaveFileAsync(request.File, request.Title, artist.Name, songsFolderPath);
+                await _fileSystemService.SaveFileAsync(request.File, request.Title, artist.Name, songsFolderPath);
 
                 var userId = _tokenService.GetUserId();
                 var song = new Song
@@ -122,28 +125,7 @@ namespace backend.Queries.Songs
                 return new Model { Message = "Song saved successfully" };
             }
 
-            private static async Task SaveFileAsync(IFormFile file, string title, string artist, string songsFolderPath)
-            {
-                if (file == null || file.Length == 0)
-                    throw new Exception("Invalid file.");
-
-                var rootPath = Path.GetFullPath(songsFolderPath);
-                var artistFolder = artist.ToLower();
-                var artistPath = Path.Combine(rootPath, artistFolder);
-
-                if (!Directory.Exists(artistPath))
-                    Directory.CreateDirectory(artistPath);
-
-                var extension = Path.GetExtension(file.FileName);
-                var fileName = $"{title}{extension}";
-                var fullPath = Path.Combine(artistPath, fileName);
-
-                using (var stream = new FileStream(fullPath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
-            }
-
+            
             private static string Truncte(string item, int maxLength)
             {
                 if (item.Length > maxLength)

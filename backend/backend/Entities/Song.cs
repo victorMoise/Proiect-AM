@@ -8,7 +8,7 @@
         public int ArtistId { get; set; }
         public int GenreId { get; set; }
         public bool IsPublic { get; set; }
-        public string FilePath { get; init; }
+        public string FilePath { get; set; }
         public int Duration { get; init; } // in seconds
 
         public User Owner { get; init; }
