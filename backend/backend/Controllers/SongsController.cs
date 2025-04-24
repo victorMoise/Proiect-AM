@@ -25,9 +25,9 @@ namespace backend.Controllers
         }
 
         [HttpGet("play/{id}")]
-        public async Task<IActionResult> GetSongStream(int id)
+        public async Task<IActionResult> GetSongStream(int id, [FromQuery] long? startByte, [FromQuery] long? endByte)
         {
-            var query = new GetSongStream.Query { Id = id };
+            var query = new GetSongStream.Query { Id = id, StartByte = startByte, EndByte = endByte, HttpContext = HttpContext };
             var result = await _mediator.Send(query);
             return result;
         }

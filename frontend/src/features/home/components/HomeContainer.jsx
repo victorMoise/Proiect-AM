@@ -16,6 +16,7 @@ const HomeContainer = () => {
   const [loading, setLoading] = useState(true);
   const [playingSongId, setPlayingSongId] = useState(null);
   const [playingSongUrl, setPlayingSongUrl] = useState(null);
+  const [songDetails, setSongDetails] = useState(null);
 
   useEffect(() => {
     const fetchSongsList = async () => {
@@ -45,6 +46,7 @@ const HomeContainer = () => {
       } else {
         setPlayingSongId(song.id);
         setPlayingSongUrl(songUrl);
+        setSongDetails({ title: song.title, artist: song.artist });
       }
     },
     [playingSongId]
@@ -64,21 +66,25 @@ const HomeContainer = () => {
     [showToast, t]
   );
 
-  const handleUnfavoriteSong = useCallback(async (song) => {
-    try {
-      const url = fit(endpoints.songs.unfavorite, { songId: song.id });
-      await axiosInstance.put(url);
-      song.isFavorite = !song.isFavorite;
-      showToast(t("Home.Songs.FavoriteRemoved"), "success");
-    } catch (err) {
-      showToast(err.message || t("Home.Songs.ErrorFetchingData"), "error");
-    }
-  }, [showToast, t]);
+  const handleUnfavoriteSong = useCallback(
+    async (song) => {
+      try {
+        const url = fit(endpoints.songs.unfavorite, { songId: song.id });
+        await axiosInstance.put(url);
+        song.isFavorite = !song.isFavorite;
+        showToast(t("Home.Songs.FavoriteRemoved"), "success");
+      } catch (err) {
+        showToast(err.message || t("Home.Songs.ErrorFetchingData"), "error");
+      }
+    },
+    [showToast, t]
+  );
 
   return (
     <PageContent pageTitle={t("Sidebar.Home")}>
       <MusicPlayer
         songUrl={playingSongUrl}
+        songDetails={songDetails}
         onEnd={() => setPlayingSongId(null)}
         onClose={() => setPlayingSongId(null)}
       />
