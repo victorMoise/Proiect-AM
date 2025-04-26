@@ -9,6 +9,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import QueueMusicIcon from "@mui/icons-material/QueueMusic";
 
 const paginationModel = { page: 0, pageSize: 10 };
 const pageSizeOptions = [5, 10, 20, 50];
@@ -22,6 +23,7 @@ const HomeComponent = (props) => {
     onPlayPause,
     onFavoriteSong,
     onUnfavoriteSong,
+    onAddToQueue,
   } = props;
 
   const theme = useTheme();
@@ -96,12 +98,26 @@ const HomeComponent = (props) => {
               >
                 {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
               </IconButton>
+              <IconButton
+                color="primary"
+                onClick={onAddToQueue.bind(null, params.row)}
+              >
+                <QueueMusicIcon />
+              </IconButton>
             </Box>
           );
         },
       },
     ],
-    [t, isMobile, playingSongId, onFavoriteSong, onUnfavoriteSong, onPlayPause]
+    [
+      t,
+      isMobile,
+      playingSongId,
+      onFavoriteSong,
+      onUnfavoriteSong,
+      onPlayPause,
+      onAddToQueue,
+    ]
   );
 
   if (loading) return <FakeText lines={10} />;

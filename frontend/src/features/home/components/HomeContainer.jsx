@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PageContent from "../../../common/components/PageContent";
 import HomeComponent from "./HomeComponent";
-import { API_BASE_URL, axiosInstance } from "../../../utils/axios";
+import { axiosInstance } from "../../../utils/axios";
 import { endpoints, fit } from "../../../utils/endpoints";
 import Toast from "../../../common/components/Toast";
 import useToast from "../../../hooks/useToast";
@@ -14,9 +14,8 @@ const HomeContainer = () => {
   const { toast, showToast, handleClose } = useToast();
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [playingSongId, setPlayingSongId] = useState(null);
-  const [playingSongUrl, setPlayingSongUrl] = useState(null);
-  const [songDetails, setSongDetails] = useState(null);
+  const [queue, setQueue] = useState([]);
+  const [queueIndex, setQueueIndex] = useState(0);
 
   useEffect(() => {
     const fetchSongsList = async () => {
@@ -36,20 +35,9 @@ const HomeContainer = () => {
 
   const handlePlayPause = useCallback(
     (song) => {
-      const songUrl = `${API_BASE_URL}songs/play/${
-        song.id
-      }?token=${localStorage.getItem("token")}`;
-
-      if (playingSongId === song.id) {
-        setPlayingSongId(null);
-        setPlayingSongUrl(null);
-      } else {
-        setPlayingSongId(song.id);
-        setPlayingSongUrl(songUrl);
-        setSongDetails({ title: song.title, artist: song.artist });
-      }
+      setQueue((prevQueue) => [song, ...prevQueue]);
     },
-    [playingSongId]
+    []
   );
 
   const handleFavoriteSong = useCallback(
@@ -65,6 +53,10 @@ const HomeContainer = () => {
     },
     [showToast, t]
   );
+
+  const handleAddToQueue = useCallback((song) => {
+    setQueue((prevQueue) => [...prevQueue, song]);
+  }, []);
 
   const handleUnfavoriteSong = useCallback(
     async (song) => {
@@ -83,19 +75,18 @@ const HomeContainer = () => {
   return (
     <PageContent pageTitle={t("Sidebar.Home")}>
       <MusicPlayer
-        songUrl={playingSongUrl}
-        songDetails={songDetails}
-        onEnd={() => setPlayingSongId(null)}
-        onClose={() => setPlayingSongId(null)}
+        queue={queue}
+        queueIndex={queueIndex}
+        setQueueIndex={setQueueIndex}
       />
       <StyledCard>
         <HomeComponent
           songs={songs}
           loading={loading}
-          playingSongId={playingSongId}
           onPlayPause={handlePlayPause}
           onFavoriteSong={handleFavoriteSong}
           onUnfavoriteSong={handleUnfavoriteSong}
+          onAddToQueue={handleAddToQueue}
         />
       </StyledCard>
       <Toast toast={toast} handleClose={handleClose} />
