@@ -1,15 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Divider, Grid, Typography } from "@mui/material";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { StyledCard } from "../../styles";
 import { API_BASE_URL } from "../../../utils/axios";
+import { useTranslation } from "react-i18next";
 
-const MusicPlayer = ({
-  queue,
-  queueIndex,
-  setQueueIndex,
-}) => {
+const MusicPlayer = ({ queue, queueIndex, setQueueIndex }) => {
+  const { t } = useTranslation("common");
   const [currentSongUrl, setCurrentSongUrl] = useState(null);
   const [currentSongDetails, setCurrentSongDetails] = useState(null);
 
@@ -54,8 +52,8 @@ const MusicPlayer = ({
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="h6" fontWeight="bold">
-            {currentSongDetails?.artist} - {currentSongDetails?.title}
-          </Typography>
+                {currentSongDetails?.artist} - {currentSongDetails?.title}
+              </Typography>
         </Grid>
         <Grid item xs={12}>
           <AudioPlayer
@@ -66,9 +64,29 @@ const MusicPlayer = ({
             showSkipControls={true}
             onClickNext={handleClickNext}
             onClickPrevious={handleClickPrevious}
-            showJumpControls
+            showJumpControls={false}
+            progressJumpSteps={5000}
             style={{ width: "auto", borderRadius: 10, bottom: 0 }}
           />
+        </Grid>
+        <Grid item xs={12}>
+          <Divider variant="middle" sx={{ marginTop: 2, marginBottom: 2 }} />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="subtitle1" fontWeight="bold">
+            {t("Home.Songs.Queue")}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          {queue.map((song, index) => (
+            <Typography
+              key={song.id}
+              variant="body2"
+              fontWeight={index === queueIndex ? "bold" : "normal"}
+            >
+              {song.artist} - {song.title}
+            </Typography>
+          ))}
         </Grid>
       </Grid>
     </StyledCard>

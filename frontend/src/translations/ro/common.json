@@ -98,7 +98,12 @@
       "Duration": "Durată",
       "FavoriteAdded": "Melodie adăugată la favorite",
       "FavoriteRemoved": "Melodie ștearsă din favorite",
-      "ErrorFetchingData": "A apărut o eroare în timpul preluării melodiilor"
+      "ErrorFetchingData": "A apărut o eroare în timpul preluării melodiilor",
+      "Queue": "Coada de redare",
+      "AddToQueue": "Adaugă la coada de redare",
+      "AddFavorite": "Adaugă la favorite",
+      "RemoveFavorite": "Șterge din favorite",
+      "PlayNow": "Redă acum"
     }
   },
   "MyMusic": {

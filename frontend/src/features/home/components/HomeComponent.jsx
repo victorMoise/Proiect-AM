@@ -4,7 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Tooltip } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -82,28 +82,40 @@ const HomeComponent = (props) => {
                 height: "100%",
               }}
             >
-              <IconButton
-                color={isFavorite ? "error" : "default"}
-                onClick={
-                  !isFavorite
-                    ? onFavoriteSong.bind(null, params.row)
-                    : onUnfavoriteSong.bind(null, params.row)
+              <Tooltip
+                title={
+                  isFavorite
+                    ? t("Home.Songs.RemoveFavorite")
+                    : t("Home.Songs.AddFavorite")
                 }
               >
-                {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-              </IconButton>
-              <IconButton
-                color="primary"
-                onClick={onPlayPause.bind(null, params.row)}
-              >
-                {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
-              </IconButton>
-              <IconButton
-                color="primary"
-                onClick={onAddToQueue.bind(null, params.row)}
-              >
-                <QueueMusicIcon />
-              </IconButton>
+                <IconButton
+                  color={isFavorite ? "error" : "default"}
+                  onClick={
+                    !isFavorite
+                      ? onFavoriteSong.bind(null, params.row)
+                      : onUnfavoriteSong.bind(null, params.row)
+                  }
+                >
+                  {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                </IconButton>
+              </Tooltip>
+              <Tooltip title={t("Home.Songs.PlayNow")}>
+                <IconButton
+                  color="primary"
+                  onClick={onPlayPause.bind(null, params.row)}
+                >
+                  {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
+                </IconButton>
+              </Tooltip>
+              <Tooltip title={t("Home.Songs.AddToQueue")}>
+                <IconButton
+                  color="primary"
+                  onClick={onAddToQueue.bind(null, params.row)}
+                >
+                  <QueueMusicIcon />
+                </IconButton>
+              </Tooltip>
             </Box>
           );
         },
