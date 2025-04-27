@@ -12,11 +12,15 @@ namespace backend.Repository.Song
             _dbContext = dbContext;
         }
 
-        public Task<E.Song[]> GetPublicSongsList()
+        public Task<E.Song[]> GetPublicSongsList(int? userId = null)
         {
             var query = _dbContext.Songs
                 .Include(x => x.Artist)
-                .Include(x => x.Genre);
+                .Include(x => x.Genre)
+                .AsQueryable();
+            if (userId.HasValue)
+                query = query.Where(x => x.OwnerId == userId);
+
             return query.ToArrayAsync();
         }
 

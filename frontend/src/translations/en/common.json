@@ -103,7 +103,9 @@
       "AddToQueue": "Add to queue",
       "AddFavorite": "Add to favorites",
       "RemoveFavorite": "Remove from favorites",
-      "PlayNow": "Play now"
+      "PlayNow": "Play now",
+      "ShowFavoritesOnly": "Show favorites only",
+      "ShowOwnedOnly": "Show my uploaded songs only"
     }
   },
   "MyMusic": {

@@ -103,7 +103,9 @@
       "AddToQueue": "Adaugă la coada de redare",
       "AddFavorite": "Adaugă la favorite",
       "RemoveFavorite": "Șterge din favorite",
-      "PlayNow": "Redă acum"
+      "PlayNow": "Redă acum",
+      "ShowFavoritesOnly": "Arată doar favoritele",
+      "ShowOwnedOnly": "Arată doar melodiile mele încărcate"
     }
   },
   "MyMusic": {
@@ -113,10 +115,10 @@
       "Error": "A apărut o eroare în timpul încărcării melodiei",
       "Artist": "Numele artistului",
       "Genre": "Gen",
-      "CreateNewArtist": "Sau creează un artist nou",
-      "SelectExistingArtist": "Selectează artist existent",
-      "CreateNewGenre": "Sau creează un gen nou",
-      "SelectExistingGenre": "Selectează gen existent",
+      "CreateNewArtist": "Sau creați un artist nou",
+      "SelectExistingArtist": "Selectați artist existent",
+      "CreateNewGenre": "Sau creați un gen muzical nou",
+      "SelectExistingGenre": "Selectați gen muzical existent",
       "SetTitle": "Setați titlul melodiei",
       "TitlePlaceholder": "Titlul melodiei mele",
       "MakePublic": "Doriți să faceți melodia publică?",

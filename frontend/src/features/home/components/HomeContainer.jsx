@@ -16,11 +16,17 @@ const HomeContainer = () => {
   const [loading, setLoading] = useState(true);
   const [queue, setQueue] = useState([]);
   const [queueIndex, setQueueIndex] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [ownedSongs, setOwnedSongs] = useState(false);
 
   useEffect(() => {
     const fetchSongsList = async () => {
       try {
-        const songsList = await axiosInstance.get(endpoints.songs.publicList);
+        const url = fit(endpoints.songs.publicList, {
+          onlyFavorites: isFavorite,
+          onlyOwned: ownedSongs,
+        });
+        const songsList = await axiosInstance.get(url);
 
         setSongs(songsList.data);
       } catch (err) {
@@ -31,14 +37,11 @@ const HomeContainer = () => {
     };
 
     fetchSongsList();
-  }, [showToast, t]);
+  }, [isFavorite, ownedSongs, showToast, t]);
 
-  const handlePlayPause = useCallback(
-    (song) => {
-      setQueue((prevQueue) => [song, ...prevQueue]);
-    },
-    []
-  );
+  const handlePlayPause = useCallback((song) => {
+    setQueue((prevQueue) => [song, ...prevQueue]);
+  }, []);
 
   const handleFavoriteSong = useCallback(
     async (song) => {
@@ -72,6 +75,14 @@ const HomeContainer = () => {
     [showToast, t]
   );
 
+  const handleSetIsFavorite = useCallback((_event, value) => {
+    setIsFavorite(value);
+  }, []);
+
+  const handleSetOwnedSongs = useCallback((_event, value) => {
+    setOwnedSongs(value);
+  }, []);
+
   return (
     <PageContent pageTitle={t("Sidebar.Home")}>
       <MusicPlayer
@@ -87,6 +98,10 @@ const HomeContainer = () => {
           onFavoriteSong={handleFavoriteSong}
           onUnfavoriteSong={handleUnfavoriteSong}
           onAddToQueue={handleAddToQueue}
+          isFavorite={isFavorite}
+          ownedSongs={ownedSongs}
+          onOwnedSongsChange={handleSetOwnedSongs}
+          onIsFavoriteChange={handleSetIsFavorite}
         />
       </StyledCard>
       <Toast toast={toast} handleClose={handleClose} />

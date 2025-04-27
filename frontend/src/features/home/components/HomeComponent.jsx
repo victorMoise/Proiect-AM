@@ -4,7 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Box, IconButton, Tooltip } from "@mui/material";
+import { Box, Checkbox, Grid, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -24,6 +24,10 @@ const HomeComponent = (props) => {
     onFavoriteSong,
     onUnfavoriteSong,
     onAddToQueue,
+    isFavorite,
+    onIsFavoriteChange,
+    ownedSongs,
+    onOwnedSongsChange,
   } = props;
 
   const theme = useTheme();
@@ -135,27 +139,58 @@ const HomeComponent = (props) => {
   if (loading) return <FakeText lines={10} />;
 
   return (
-    <DataGrid
-      rows={songs}
-      columns={columns}
-      initialState={{ pagination: { paginationModel } }}
-      pageSizeOptions={pageSizeOptions}
-      disableRowSelectionOnClick
-      sx={{
-        width: "100%",
-        overflowX: "auto",
-        "& .custom-header": {
-          backgroundColor: theme.palette.primary.dark,
-          color: "white",
-        },
-        "& .custom-header svg": {
-          color: "white",
-        },
-        "& .hideRightSeparator > .MuiDataGrid-columnSeparator": {
-          display: "none",
-        },
-      }}
-    />
+    <>
+      <Grid container spacing={2}>
+        <Grid item xs={12} lg={6}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Typography variant="subtitle1">
+              {t("Home.Songs.ShowFavoritesOnly")}
+            </Typography>
+            <Checkbox
+              checked={isFavorite}
+              onChange={onIsFavoriteChange}
+              label={t("Home.Songs.Favorites")}
+            />
+          </Stack>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Typography variant="subtitle1">
+              {t("Home.Songs.ShowOwnedOnly")}
+            </Typography>
+            <Checkbox
+              checked={ownedSongs}
+              onChange={onOwnedSongsChange}
+              label={t("Home.Songs.ShowOwnedSongs")}
+            />
+          </Stack>
+        </Grid>
+
+        <Grid item xs={12}>
+          <DataGrid
+            rows={songs}
+            columns={columns}
+            initialState={{ pagination: { paginationModel } }}
+            pageSizeOptions={pageSizeOptions}
+            disableRowSelectionOnClick
+            sx={{
+              width: "100%",
+              overflowX: "auto",
+              "& .custom-header": {
+                backgroundColor: theme.palette.primary.dark,
+                color: "white",
+              },
+              "& .custom-header svg": {
+                color: "white",
+              },
+              "& .hideRightSeparator > .MuiDataGrid-columnSeparator": {
+                display: "none",
+              },
+            }}
+          />
+        </Grid>
+      </Grid>
+    </>
   );
 };
 
