@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PageContent from "../../../common/components/PageContent";
 import HomeComponent from "./HomeComponent";
-import { API_BASE_URL, axiosInstance } from "../../../utils/axios";
+import { axiosInstance } from "../../../utils/axios";
 import { endpoints, fit } from "../../../utils/endpoints";
 import Toast from "../../../common/components/Toast";
 import useToast from "../../../hooks/useToast";
@@ -14,14 +14,21 @@ const HomeContainer = () => {
   const { toast, showToast, handleClose } = useToast();
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [playingSongId, setPlayingSongId] = useState(null);
-  const [playingSongUrl, setPlayingSongUrl] = useState(null);
-  const [songDetails, setSongDetails] = useState(null);
+  const [queue, setQueue] = useState([]);
+  const [queueIndex, setQueueIndex] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [ownedSongs, setOwnedSongs] = useState(false);
+  const [currentSongUrl, setCurrentSongUrl] = useState(null);
+  const [currentSongDetails, setCurrentSongDetails] = useState(null);
 
   useEffect(() => {
     const fetchSongsList = async () => {
       try {
-        const songsList = await axiosInstance.get(endpoints.songs.publicList);
+        const url = fit(endpoints.songs.publicList, {
+          onlyFavorites: isFavorite,
+          onlyOwned: ownedSongs,
+        });
+        const songsList = await axiosInstance.get(url);
 
         setSongs(songsList.data);
       } catch (err) {
@@ -32,25 +39,16 @@ const HomeContainer = () => {
     };
 
     fetchSongsList();
-  }, [showToast, t]);
+  }, [isFavorite, ownedSongs, showToast, t]);
 
-  const handlePlayPause = useCallback(
-    (song) => {
-      const songUrl = `${API_BASE_URL}songs/play/${
-        song.id
-      }?token=${localStorage.getItem("token")}`;
+  const handlePlayPause = useCallback((song) => {
+    setQueue((prevQueue) => {
+      const updatedQueue = prevQueue.filter((s) => s.id !== song.id);
+      return [song, ...updatedQueue];
+    });
 
-      if (playingSongId === song.id) {
-        setPlayingSongId(null);
-        setPlayingSongUrl(null);
-      } else {
-        setPlayingSongId(song.id);
-        setPlayingSongUrl(songUrl);
-        setSongDetails({ title: song.title, artist: song.artist });
-      }
-    },
-    [playingSongId]
-  );
+    setQueueIndex(0);
+  }, []);
 
   const handleFavoriteSong = useCallback(
     async (song) => {
@@ -66,6 +64,15 @@ const HomeContainer = () => {
     [showToast, t]
   );
 
+  const handleAddToQueue = useCallback((song) => {
+    setQueue((prevQueue) => {
+      if (!prevQueue.find((s) => s.id === song.id)) {
+        return [...prevQueue, song];
+      }
+      return prevQueue;
+    });
+  }, []);
+
   const handleUnfavoriteSong = useCallback(
     async (song) => {
       try {
@@ -80,24 +87,75 @@ const HomeContainer = () => {
     [showToast, t]
   );
 
+  const handleSetIsFavorite = useCallback((_event, value) => {
+    setIsFavorite(value);
+  }, []);
+
+  const handleSetOwnedSongs = useCallback((_event, value) => {
+    setOwnedSongs(value);
+  }, []);
+
+  const handleRemoveFromQueue = useCallback(
+    (indexToRemove) => () => {
+      if (indexToRemove === queueIndex) return;
+
+      setQueueIndex((prevIndex) => {
+        if (indexToRemove < prevIndex) {
+          return prevIndex - 1;
+        } else if (
+          indexToRemove === prevIndex &&
+          prevIndex === queue.length - 1
+        ) {
+          return prevIndex - 1;
+        }
+        return prevIndex;
+      });
+
+      const updatedQueue = queue.filter((_, index) => index !== indexToRemove);
+
+      if (updatedQueue.length === 0) {
+        setCurrentSongUrl(null);
+        setCurrentSongDetails(null);
+      }
+
+      setQueue(updatedQueue);
+    },
+    [
+      queue,
+      queueIndex,
+      setCurrentSongDetails,
+      setCurrentSongUrl,
+      setQueueIndex,
+      setQueue,
+    ]
+  );
+
   return (
     <PageContent pageTitle={t("Sidebar.Home")}>
-      <MusicPlayer
-        songUrl={playingSongUrl}
-        songDetails={songDetails}
-        onEnd={() => setPlayingSongId(null)}
-        onClose={() => setPlayingSongId(null)}
-      />
       <StyledCard>
         <HomeComponent
           songs={songs}
           loading={loading}
-          playingSongId={playingSongId}
           onPlayPause={handlePlayPause}
           onFavoriteSong={handleFavoriteSong}
           onUnfavoriteSong={handleUnfavoriteSong}
+          onAddToQueue={handleAddToQueue}
+          isFavorite={isFavorite}
+          ownedSongs={ownedSongs}
+          onOwnedSongsChange={handleSetOwnedSongs}
+          onIsFavoriteChange={handleSetIsFavorite}
         />
       </StyledCard>
+      <MusicPlayer
+        queue={queue}
+        queueIndex={queueIndex}
+        setQueueIndex={setQueueIndex}
+        setCurrentSongUrl={setCurrentSongUrl}
+        setCurrentSongDetails={setCurrentSongDetails}
+        currentSongUrl={currentSongUrl}
+        currentSongDetails={currentSongDetails}
+        onRemoveFromQueue={handleRemoveFromQueue}
+      />
       <Toast toast={toast} handleClose={handleClose} />
     </PageContent>
   );

@@ -4,11 +4,12 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Box, IconButton } from "@mui/material";
+import { Box, Checkbox, Grid, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import QueueMusicIcon from "@mui/icons-material/QueueMusic";
 
 const paginationModel = { page: 0, pageSize: 10 };
 const pageSizeOptions = [5, 10, 20, 50];
@@ -22,6 +23,11 @@ const HomeComponent = (props) => {
     onPlayPause,
     onFavoriteSong,
     onUnfavoriteSong,
+    onAddToQueue,
+    isFavorite,
+    onIsFavoriteChange,
+    ownedSongs,
+    onOwnedSongsChange,
   } = props;
 
   const theme = useTheme();
@@ -80,54 +86,111 @@ const HomeComponent = (props) => {
                 height: "100%",
               }}
             >
-              <IconButton
-                color={isFavorite ? "error" : "default"}
-                onClick={
-                  !isFavorite
-                    ? onFavoriteSong.bind(null, params.row)
-                    : onUnfavoriteSong.bind(null, params.row)
+              <Tooltip
+                title={
+                  isFavorite
+                    ? t("Home.Songs.RemoveFavorite")
+                    : t("Home.Songs.AddFavorite")
                 }
               >
-                {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-              </IconButton>
-              <IconButton
-                color="primary"
-                onClick={onPlayPause.bind(null, params.row)}
-              >
-                {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
-              </IconButton>
+                <IconButton
+                  color={isFavorite ? "error" : "default"}
+                  onClick={
+                    !isFavorite
+                      ? onFavoriteSong.bind(null, params.row)
+                      : onUnfavoriteSong.bind(null, params.row)
+                  }
+                >
+                  {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                </IconButton>
+              </Tooltip>
+              <Tooltip title={t("Home.Songs.PlayNow")}>
+                <IconButton
+                  color="primary"
+                  onClick={onPlayPause.bind(null, params.row)}
+                >
+                  {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
+                </IconButton>
+              </Tooltip>
+              <Tooltip title={t("Home.Songs.AddToQueue")}>
+                <IconButton
+                  color="primary"
+                  onClick={onAddToQueue.bind(null, params.row)}
+                >
+                  <QueueMusicIcon />
+                </IconButton>
+              </Tooltip>
             </Box>
           );
         },
       },
     ],
-    [t, isMobile, playingSongId, onFavoriteSong, onUnfavoriteSong, onPlayPause]
+    [
+      t,
+      isMobile,
+      playingSongId,
+      onFavoriteSong,
+      onUnfavoriteSong,
+      onPlayPause,
+      onAddToQueue,
+    ]
   );
 
   if (loading) return <FakeText lines={10} />;
 
   return (
-    <DataGrid
-      rows={songs}
-      columns={columns}
-      initialState={{ pagination: { paginationModel } }}
-      pageSizeOptions={pageSizeOptions}
-      disableRowSelectionOnClick
-      sx={{
-        width: "100%",
-        overflowX: "auto",
-        "& .custom-header": {
-          backgroundColor: theme.palette.primary.dark,
-          color: "white",
-        },
-        "& .custom-header svg": {
-          color: "white",
-        },
-        "& .hideRightSeparator > .MuiDataGrid-columnSeparator": {
-          display: "none",
-        },
-      }}
-    />
+    <>
+      <Grid container spacing={2}>
+        <Grid item xs={12} lg={6}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Typography variant="subtitle1">
+              {t("Home.Songs.ShowFavoritesOnly")}
+            </Typography>
+            <Checkbox
+              checked={isFavorite}
+              onChange={onIsFavoriteChange}
+              label={t("Home.Songs.Favorites")}
+            />
+          </Stack>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Typography variant="subtitle1">
+              {t("Home.Songs.ShowOwnedOnly")}
+            </Typography>
+            <Checkbox
+              checked={ownedSongs}
+              onChange={onOwnedSongsChange}
+              label={t("Home.Songs.ShowOwnedSongs")}
+            />
+          </Stack>
+        </Grid>
+
+        <Grid item xs={12}>
+          <DataGrid
+            rows={songs}
+            columns={columns}
+            initialState={{ pagination: { paginationModel } }}
+            pageSizeOptions={pageSizeOptions}
+            disableRowSelectionOnClick
+            sx={{
+              width: "100%",
+              overflowX: "auto",
+              "& .custom-header": {
+                backgroundColor: theme.palette.primary.dark,
+                color: "white",
+              },
+              "& .custom-header svg": {
+                color: "white",
+              },
+              "& .hideRightSeparator > .MuiDataGrid-columnSeparator": {
+                display: "none",
+              },
+            }}
+          />
+        </Grid>
+      </Grid>
+    </>
   );
 };
 

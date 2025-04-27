@@ -18,9 +18,9 @@ namespace backend.Controllers
         }
 
         [HttpGet("public/list")]
-        public async Task<IActionResult> GetPublicSongsList()
+        public async Task<IActionResult> GetPublicSongsList([FromQuery] GetPublicSongsList.Query query)
         {
-            var result = await _mediator.Send(new GetPublicSongsList.Query());
+            var result = await _mediator.Send(query);
             return Ok(result);
         }
 

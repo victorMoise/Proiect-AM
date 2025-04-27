@@ -8,7 +8,11 @@ namespace backend.Queries.Songs
 {
     public class GetPublicSongsList 
     {
-        public class Query : IRequest<SongModel[]> { }
+        public class Query : IRequest<SongModel[]> 
+        { 
+            public bool OnlyFavorites { get; init; }
+            public bool OnlyOwned { get; init; }
+        }
 
         internal class QueryHandler : IRequestHandler<Query, SongModel[]>
         {
@@ -25,14 +29,18 @@ namespace backend.Queries.Songs
 
             public async Task<SongModel[]> Handle(Query request, CancellationToken cancellationToken)
             {
-                var entities = await _songRepository.GetPublicSongsList();
                 var userId = _tokenService.GetUserId();
+                var entities = await _songRepository.GetPublicSongsList(request.OnlyOwned ? userId.Value : null);
                 var favorites = await _songRepository.GetUserFavorites(userId.Value);
                 var models = _mapper.Map<SongModel[]>(entities);
                 foreach (var model in models)
                 {
                     model.IsFavorite = favorites.Any(x => x.SongId == model.Id);
                 }
+
+                if (request.OnlyFavorites)
+                    models = models.Where(x => x.IsFavorite).ToArray();
+
                 return models;
             }
         }

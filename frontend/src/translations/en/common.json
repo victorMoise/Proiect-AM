@@ -98,7 +98,14 @@
       "Duration": "Duration",
       "FavoriteAdded": "Song added to favorites",
       "FavoriteRemoved": "Song removed from favorites",
-      "ErrorFetchingData": "An error occurred while fetching songs"
+      "ErrorFetchingData": "An error occurred while fetching songs",
+      "Queue": "Queue",
+      "AddToQueue": "Add to queue",
+      "AddFavorite": "Add to favorites",
+      "RemoveFavorite": "Remove from favorites",
+      "PlayNow": "Play now",
+      "ShowFavoritesOnly": "Show favorites only",
+      "ShowOwnedOnly": "Show my uploaded songs only"
     }
   },
   "MyMusic": {

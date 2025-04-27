@@ -11,7 +11,7 @@ namespace backend.Queries.Songs
             public int Id { get; set; }
             public long? StartByte { get; set; }
             public long? EndByte { get; set; }
-            public Microsoft.AspNetCore.Http.HttpContext HttpContext { get; set; } 
+            public HttpContext HttpContext { get; set; } 
         }
 
         internal class QueryHandler : IRequestHandler<Query, IActionResult>
