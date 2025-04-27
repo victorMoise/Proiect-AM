@@ -1,15 +1,23 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Divider, Grid, Typography } from "@mui/material";
+import React, { useCallback, useEffect } from "react";
+import { Divider, Grid, IconButton, Typography } from "@mui/material";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { StyledCard } from "../../styles";
 import { API_BASE_URL } from "../../../utils/axios";
 import { useTranslation } from "react-i18next";
+import CloseIcon from "@mui/icons-material/Close";
 
-const MusicPlayer = ({ queue, queueIndex, setQueueIndex }) => {
+const MusicPlayer = ({
+  queue,
+  queueIndex,
+  setQueueIndex,
+  setCurrentSongUrl,
+  setCurrentSongDetails,
+  currentSongUrl,
+  currentSongDetails,
+  onRemoveFromQueue,
+}) => {
   const { t } = useTranslation("common");
-  const [currentSongUrl, setCurrentSongUrl] = useState(null);
-  const [currentSongDetails, setCurrentSongDetails] = useState(null);
 
   useEffect(() => {
     if (queue.length > 0 && queue[queueIndex]) {
@@ -23,7 +31,7 @@ const MusicPlayer = ({ queue, queueIndex, setQueueIndex }) => {
       setCurrentSongUrl(null);
       setCurrentSongDetails(null);
     }
-  }, [queue, queueIndex]);
+  }, [queue, queueIndex, setCurrentSongDetails, setCurrentSongUrl]);
 
   const handleEnd = useCallback(() => {
     if (queue.length > 0 && queueIndex < queue.length - 1) {
@@ -32,7 +40,13 @@ const MusicPlayer = ({ queue, queueIndex, setQueueIndex }) => {
       setCurrentSongUrl(null);
       setCurrentSongDetails(null);
     }
-  }, [queue.length, queueIndex, setQueueIndex]);
+  }, [
+    queue.length,
+    queueIndex,
+    setCurrentSongDetails,
+    setCurrentSongUrl,
+    setQueueIndex,
+  ]);
 
   const handleClickNext = useCallback(() => {
     if (queue.length > 0 && queueIndex < queue.length - 1) {
@@ -52,8 +66,8 @@ const MusicPlayer = ({ queue, queueIndex, setQueueIndex }) => {
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="h6" fontWeight="bold">
-                {currentSongDetails?.artist} - {currentSongDetails?.title}
-              </Typography>
+            {currentSongDetails?.artist} - {currentSongDetails?.title}
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <AudioPlayer
@@ -77,15 +91,22 @@ const MusicPlayer = ({ queue, queueIndex, setQueueIndex }) => {
             {t("Home.Songs.Queue")}
           </Typography>
         </Grid>
-        <Grid item xs={12}>
+        <Grid container spacing={1}>
           {queue.map((song, index) => (
-            <Typography
-              key={song.id}
-              variant="body2"
-              fontWeight={index === queueIndex ? "bold" : "normal"}
-            >
-              {song.artist} - {song.title}
-            </Typography>
+            <Grid item xs={12} key={song.id} display="flex" alignItems="center">
+              {index !== queueIndex && (
+                <IconButton size="small" onClick={onRemoveFromQueue(index)}>
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              )}
+              <Typography
+                variant="body2"
+                fontWeight={index === queueIndex ? "bold" : "normal"}
+                sx={{ marginLeft: 1 }}
+              >
+                {song.artist} - {song.title}
+              </Typography>
+            </Grid>
           ))}
         </Grid>
       </Grid>

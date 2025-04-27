@@ -18,6 +18,8 @@ const HomeContainer = () => {
   const [queueIndex, setQueueIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
   const [ownedSongs, setOwnedSongs] = useState(false);
+  const [currentSongUrl, setCurrentSongUrl] = useState(null);
+  const [currentSongDetails, setCurrentSongDetails] = useState(null);
 
   useEffect(() => {
     const fetchSongsList = async () => {
@@ -40,7 +42,13 @@ const HomeContainer = () => {
   }, [isFavorite, ownedSongs, showToast, t]);
 
   const handlePlayPause = useCallback((song) => {
-    setQueue((prevQueue) => [song, ...prevQueue]);
+    setQueue((prevQueue) => {
+      if (!prevQueue.find((s) => s.id === song.id)) {
+        return [song, ...prevQueue];
+      }
+      return prevQueue;
+    });
+    setQueueIndex(0);
   }, []);
 
   const handleFavoriteSong = useCallback(
@@ -58,7 +66,12 @@ const HomeContainer = () => {
   );
 
   const handleAddToQueue = useCallback((song) => {
-    setQueue((prevQueue) => [...prevQueue, song]);
+    setQueue((prevQueue) => {
+      if (!prevQueue.find((s) => s.id === song.id)) {
+        return [...prevQueue, song];
+      }
+      return prevQueue;
+    });
   }, []);
 
   const handleUnfavoriteSong = useCallback(
@@ -83,13 +96,43 @@ const HomeContainer = () => {
     setOwnedSongs(value);
   }, []);
 
+  const handleRemoveFromQueue = useCallback(
+    (indexToRemove) => () => {
+      if (indexToRemove === queueIndex) return;
+
+      setQueueIndex((prevIndex) => {
+        if (indexToRemove < prevIndex) {
+          return prevIndex - 1;
+        } else if (
+          indexToRemove === prevIndex &&
+          prevIndex === queue.length - 1
+        ) {
+          return prevIndex - 1;
+        }
+        return prevIndex;
+      });
+
+      const updatedQueue = queue.filter((_, index) => index !== indexToRemove);
+
+      if (updatedQueue.length === 0) {
+        setCurrentSongUrl(null);
+        setCurrentSongDetails(null);
+      }
+
+      setQueue(updatedQueue);
+    },
+    [
+      queue,
+      queueIndex,
+      setCurrentSongDetails,
+      setCurrentSongUrl,
+      setQueueIndex,
+      setQueue,
+    ]
+  );
+
   return (
     <PageContent pageTitle={t("Sidebar.Home")}>
-      <MusicPlayer
-        queue={queue}
-        queueIndex={queueIndex}
-        setQueueIndex={setQueueIndex}
-      />
       <StyledCard>
         <HomeComponent
           songs={songs}
@@ -104,6 +147,16 @@ const HomeContainer = () => {
           onIsFavoriteChange={handleSetIsFavorite}
         />
       </StyledCard>
+      <MusicPlayer
+        queue={queue}
+        queueIndex={queueIndex}
+        setQueueIndex={setQueueIndex}
+        setCurrentSongUrl={setCurrentSongUrl}
+        setCurrentSongDetails={setCurrentSongDetails}
+        currentSongUrl={currentSongUrl}
+        currentSongDetails={currentSongDetails}
+        onRemoveFromQueue={handleRemoveFromQueue}
+      />
       <Toast toast={toast} handleClose={handleClose} />
     </PageContent>
   );
