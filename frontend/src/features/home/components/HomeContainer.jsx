@@ -43,11 +43,10 @@ const HomeContainer = () => {
 
   const handlePlayPause = useCallback((song) => {
     setQueue((prevQueue) => {
-      if (!prevQueue.find((s) => s.id === song.id)) {
-        return [song, ...prevQueue];
-      }
-      return prevQueue;
+      const updatedQueue = prevQueue.filter((s) => s.id !== song.id);
+      return [song, ...updatedQueue];
     });
+
     setQueueIndex(0);
   }, []);
 
