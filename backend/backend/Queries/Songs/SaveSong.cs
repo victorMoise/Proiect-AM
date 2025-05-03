@@ -110,6 +110,20 @@ namespace backend.Queries.Songs
                 await _fileSystemService.SaveFileAsync(request.File, request.Title, artist.Name, songsFolderPath);
 
                 var userId = _tokenService.GetUserId();
+                var relativePath = Path.Combine(artist.Name.ToLower(), $"{request.Title}{Path.GetExtension(request.File.FileName)}");
+                var fullPath = Path.Combine(songsFolderPath, relativePath);
+
+                int duration;
+                try
+                {
+                    using var audioFile = TagLib.File.Create(fullPath);
+                    duration = (int)audioFile.Properties.Duration.TotalSeconds;
+                }
+                catch
+                {
+                    duration = 0;
+                }
+
                 var song = new Song
                 {
                     Title = request.Title,
@@ -117,10 +131,8 @@ namespace backend.Queries.Songs
                     IsPublic = request.IsPublic,
                     ArtistId = artist.Id,
                     GenreId = genre.Id,
-                    FilePath = Path.Combine(artist.Name.ToLower(), $"{request.Title}{Path.GetExtension(request.File.FileName)}"),
-                    Duration = Path.GetExtension(request.File.FileName) == "mp3" ?
-                        (int)GetMp3Duration(Path.Combine(songsFolderPath, Path.Combine(artist.Name.ToLower(), $"{request.Title}{Path.GetExtension(request.File.FileName)}")))
-                        : 0
+                    FilePath = relativePath,
+                    Duration = duration
                 };
 
                 await _songRepository.SaveSong(song);
