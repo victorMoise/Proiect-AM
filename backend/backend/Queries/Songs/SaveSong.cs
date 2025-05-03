@@ -137,7 +137,6 @@ namespace backend.Queries.Songs
                     await _fileSystemService.SaveFileAsync(request.File, request.Title, artist.Name, songsFolderPath);
                 }
 
-                // Get duration
                 int duration;
                 try
                 {
@@ -149,7 +148,6 @@ namespace backend.Queries.Songs
                     duration = 0;
                 }
 
-                // Save to DB
                 var song = new Song
                 {
                     Title = request.Title,
