@@ -19,6 +19,7 @@ const UploadContainer = ({ onUploadSuccess }) => {
   const [genres, setGenres] = useState([]);
   const [newGenre, setNewGenre] = useState(null);
   const [isPublic, setIsPublic] = useState(false);
+  const [allowConvert, setAllowConvert] = useState(false);
   const [title, setTitle] = useState("");
 
   const handleSelectFile = useCallback(() => {
@@ -104,7 +105,7 @@ const UploadContainer = ({ onUploadSuccess }) => {
       showToast(t("MyMusic.Upload.NoGenre"), "error");
       return;
     }
-    
+
     if (!title) {
       showToast(t("MyMusic.Upload.NoTitle"), "error");
       return;
@@ -117,7 +118,8 @@ const UploadContainer = ({ onUploadSuccess }) => {
     formData.append("ArtistId", artist?.id?.toString() || "");
     formData.append("NewArtistName", newArtist || "");
     formData.append("Title", title || "");
-    formData.append("IsPublic", isPublic ? "true" : "false");
+    formData.append("IsPublic", isPublic === "yes" ? "true" : "false");
+    formData.append("AllowConvert", allowConvert === "yes" ? "true" : "false");
 
     try {
       await axiosInstance.post(endpoints.songs.generic, formData, {
@@ -134,6 +136,7 @@ const UploadContainer = ({ onUploadSuccess }) => {
       setNewGenre("");
       setTitle("");
       setIsPublic(false);
+      setAllowConvert("yes");
       if (onUploadSuccess) onUploadSuccess();
       showToast(t("MyMusic.Upload.Success"), "success");
     } catch (error) {
@@ -144,7 +147,19 @@ const UploadContainer = ({ onUploadSuccess }) => {
         "error"
       );
     }
-  }, [file, artist, newArtist, genre, newGenre, title, isPublic, showToast, t, onUploadSuccess]);
+  }, [
+    file,
+    artist,
+    newArtist,
+    genre,
+    newGenre,
+    title,
+    isPublic,
+    allowConvert,
+    showToast,
+    t,
+    onUploadSuccess,
+  ]);
 
   const handleReset = useCallback(() => {
     setFile(null);
@@ -157,8 +172,13 @@ const UploadContainer = ({ onUploadSuccess }) => {
   }, []);
 
   const handleIsPublicChange = useCallback((e) => {
-    const { checked } = e.target;
+    const checked = e.target.value;
     setIsPublic(checked);
+  }, []);
+
+  const handleAllowConvertChange = useCallback((e) => {
+    const checked = e.target.value;
+    setAllowConvert(checked);
   }, []);
 
   const handleTitleChange = useCallback((e) => {
@@ -189,6 +209,8 @@ const UploadContainer = ({ onUploadSuccess }) => {
         onTitleChange={handleTitleChange}
         isPublic={isPublic}
         onIsPublicChange={handleIsPublicChange}
+        allowConvert={allowConvert}
+        onAllowConvertChange={handleAllowConvertChange}
       />
       <Toast toast={toast} handleClose={handleClose} />
     </StyledCard>

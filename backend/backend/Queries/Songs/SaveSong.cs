@@ -5,8 +5,8 @@ using backend.Service.FileSystem;
 using backend.Service.Token;
 using FluentValidation;
 using MediatR;
+using NAudio.Lame;
 using NAudio.Wave;
-using System.Threading;
 
 namespace backend.Queries.Songs
 {
@@ -17,6 +17,7 @@ namespace backend.Queries.Songs
             public IFormFile File { get; init; }
             public string Title { get; init; }
             public bool IsPublic { get; init; }
+            public bool AllowConvert { get; init; }
             public int? ArtistId { get; init; }
             public int? GenreId { get; init; }
             public string? NewArtistName {get; init; }
@@ -107,12 +108,36 @@ namespace backend.Queries.Songs
                 }
 
                 var songsFolderPath = _configuration.GetSection("Songs").GetValue<string>("FolderPath");
-                await _fileSystemService.SaveFileAsync(request.File, request.Title, artist.Name, songsFolderPath);
-
                 var userId = _tokenService.GetUserId();
-                var relativePath = Path.Combine(artist.Name.ToLower(), $"{request.Title}{Path.GetExtension(request.File.FileName)}");
+
+                var originalExtension = Path.GetExtension(request.File.FileName)?.ToLowerInvariant();
+                var isConversionRequired = request.AllowConvert && originalExtension != ".mp3";
+
+                var relativePath = Path.Combine(artist.Name.ToLower(), $"{request.Title}{(isConversionRequired ? ".mp3" : originalExtension)}");
                 var fullPath = Path.Combine(songsFolderPath, relativePath);
 
+                if (isConversionRequired)
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+
+                    var tempFilePath = Path.GetTempFileName();
+                    await using (var stream = new FileStream(tempFilePath, FileMode.Create))
+                    {
+                        await request.File.CopyToAsync(stream);
+                    }
+
+                    using var reader = new AudioFileReader(tempFilePath);
+                    using var writer = new LameMP3FileWriter(fullPath, reader.WaveFormat, LAMEPreset.STANDARD);
+                    reader.CopyTo(writer);
+
+                    File.Delete(tempFilePath);
+                }
+                else
+                {
+                    await _fileSystemService.SaveFileAsync(request.File, request.Title, artist.Name, songsFolderPath);
+                }
+
+                // Get duration
                 int duration;
                 try
                 {
@@ -124,6 +149,7 @@ namespace backend.Queries.Songs
                     duration = 0;
                 }
 
+                // Save to DB
                 var song = new Song
                 {
                     Title = request.Title,

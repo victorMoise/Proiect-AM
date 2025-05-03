@@ -37,7 +37,8 @@ namespace backend.Controllers
         {
             var file = formData.Files.GetFile("File");
             var title = formData["Title"];
-            var isPublic = formData["IsPublic"] == "yes";
+            var isPublic = formData["IsPublic"] == "true";
+            var allowConvert = formData["AllowConvert"] == "true";
             var artistId = formData.ContainsKey("ArtistId") && !string.IsNullOrEmpty(formData["ArtistId"]) ?
                            (int?)int.Parse(formData["ArtistId"]) : null;
             var genreId = formData.ContainsKey("GenreId") && !string.IsNullOrEmpty(formData["GenreId"]) ?
@@ -50,6 +51,7 @@ namespace backend.Controllers
                 File = file,
                 Title = title,
                 IsPublic = isPublic,
+                AllowConvert = allowConvert,
                 ArtistId = artistId,
                 GenreId = genreId,
                 NewArtistName = newArtistName,

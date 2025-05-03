@@ -9,6 +9,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
@@ -36,6 +37,8 @@ const UploadComponent = (props) => {
     onTitleChange,
     isPublic,
     onIsPublicChange,
+    allowConvert,
+    onAllowConvertChange,
   } = props;
   const { t } = useTranslation("common");
 
@@ -74,7 +77,7 @@ const UploadComponent = (props) => {
       </Grid>
 
       <Grid item container xs={12} spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12}>
           <Grid item xs={12}>
             <Typography variant="body1" component="h2" marginBottom={1}>
               {t("MyMusic.Upload.SetTitle")}
@@ -92,6 +95,13 @@ const UploadComponent = (props) => {
             />
           </Grid>
         </Grid>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Divider variant="middle" />
+      </Grid>
+
+      <Grid item container xs={12} spacing={2}>
         <Grid item container xs={12} md={6}>
           <Grid item xs={12}>
             <Typography variant="body1" component="h2" marginBottom={1}>
@@ -112,6 +122,36 @@ const UploadComponent = (props) => {
                 size="small"
                 value={isPublic ? "yes" : "no"}
                 onChange={onIsPublicChange}
+                displayEmpty
+              >
+                <MenuItem value="yes">{t("Yes")}</MenuItem>
+                <MenuItem value="no">{t("No")}</MenuItem>
+              </Select>
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid item container xs={12} md={6}>
+          <Grid item xs={12}>
+            <Tooltip title={t("MyMusic.Upload.AllowConvertTooltip")}>
+              <Typography variant="body1" component="h2" marginBottom={1}>
+                {t("MyMusic.Upload.AllowConvertQuestion")}
+              </Typography>
+            </Tooltip>
+          </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" alignItems="center" gap={2}>
+              <Typography
+                variant="body1"
+                component="h2"
+                sx={{ whiteSpace: "nowrap" }}
+              >
+                {t("MyMusic.Upload.AllowConvert")}:
+              </Typography>
+              <Select
+                fullWidth
+                size="small"
+                value={allowConvert ? "yes" : "no"}
+                onChange={onAllowConvertChange}
                 displayEmpty
               >
                 <MenuItem value="yes">{t("Yes")}</MenuItem>
