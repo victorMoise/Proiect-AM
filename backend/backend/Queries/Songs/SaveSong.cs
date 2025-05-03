@@ -118,7 +118,9 @@ namespace backend.Queries.Songs
                     ArtistId = artist.Id,
                     GenreId = genre.Id,
                     FilePath = Path.Combine(artist.Name.ToLower(), $"{request.Title}{Path.GetExtension(request.File.FileName)}"),
-                    Duration = (int)GetMp3Duration(Path.Combine(songsFolderPath, Path.Combine(artist.Name.ToLower(), $"{request.Title}{Path.GetExtension(request.File.FileName)}")))
+                    Duration = Path.GetExtension(request.File.FileName) == "mp3" ?
+                        (int)GetMp3Duration(Path.Combine(songsFolderPath, Path.Combine(artist.Name.ToLower(), $"{request.Title}{Path.GetExtension(request.File.FileName)}")))
+                        : 0
                 };
 
                 await _songRepository.SaveSong(song);

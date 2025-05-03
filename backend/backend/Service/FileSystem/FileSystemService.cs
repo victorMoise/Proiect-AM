@@ -22,9 +22,9 @@
                 Directory.CreateDirectory(artistPath);
 
             var extension = Path.GetExtension(file.FileName);
-            var fileName = title ;
-            if (!title.EndsWith(".mp3"))
-                fileName = fileName + ".mp3";
+            var fileName = title;
+            if (!title.EndsWith(extension))
+                fileName = fileName + extension;
             var fullPath = Path.Combine(artistPath, fileName);
 
             using (var stream = new FileStream(fullPath, FileMode.Create))
