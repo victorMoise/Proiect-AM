@@ -30,7 +30,7 @@ namespace backend.Queries.Songs
             public async Task<SongModel[]> Handle(Query request, CancellationToken cancellationToken)
             {
                 var userId = _tokenService.GetUserId();
-                var entities = await _songRepository.GetPublicSongsList(request.OnlyOwned ? userId.Value : null);
+                var entities = await _songRepository.GetPublicSongsList(request.OnlyOwned, userId.Value);
                 var favorites = await _songRepository.GetUserFavorites(userId.Value);
                 var models = _mapper.Map<SongModel[]>(entities);
                 foreach (var model in models)

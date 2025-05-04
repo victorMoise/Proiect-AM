@@ -4,7 +4,7 @@ namespace backend.Repository.Song
 {
     public interface ISongRepository
     {
-        Task<E.Song[]> GetPublicSongsList(int? userId = null);
+        Task<E.Song[]> GetPublicSongsList(bool onlyOwned, int userId);
         Task<E.Favorite[]> GetUserFavorites(int userId);
         Task<E.Song?> GetSong(int songId);
         Task<E.Artist[]> GetArtists();

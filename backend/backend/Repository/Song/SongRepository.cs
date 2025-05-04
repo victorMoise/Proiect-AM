@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using backend.Service.Token;
+using Microsoft.EntityFrameworkCore;
 using E = backend.Entities;
 
 namespace backend.Repository.Song
@@ -6,20 +7,24 @@ namespace backend.Repository.Song
     public class SongRepository : ISongRepository
     {
         private readonly AppDbContext _dbContext;
+        private readonly ITokenService _tokenService;
 
-        public SongRepository(AppDbContext dbContext)
+        public SongRepository(AppDbContext dbContext, ITokenService tokenService)
         {
             _dbContext = dbContext;
+            _tokenService = tokenService;
         }
 
-        public Task<E.Song[]> GetPublicSongsList(int? userId = null)
+        public Task<E.Song[]> GetPublicSongsList(bool onlyOwned, int userId)
         {
             var query = _dbContext.Songs
                 .Include(x => x.Artist)
                 .Include(x => x.Genre)
                 .AsQueryable();
-            if (userId.HasValue)
+            if (onlyOwned)
                 query = query.Where(x => x.OwnerId == userId);
+            else
+                query = query.Where(x => x.OwnerId == userId || x.IsPublic);
 
             return query.ToArrayAsync();
         }
