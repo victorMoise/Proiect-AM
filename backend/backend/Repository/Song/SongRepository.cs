@@ -7,12 +7,10 @@ namespace backend.Repository.Song
     public class SongRepository : ISongRepository
     {
         private readonly AppDbContext _dbContext;
-        private readonly ITokenService _tokenService;
 
-        public SongRepository(AppDbContext dbContext, ITokenService tokenService)
+        public SongRepository(AppDbContext dbContext)
         {
             _dbContext = dbContext;
-            _tokenService = tokenService;
         }
 
         public Task<E.Song[]> GetPublicSongsList(bool onlyOwned, int userId)
